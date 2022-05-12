@@ -1,0 +1,21 @@
+import { connect } from 'react-redux'
+
+import { chooseOtherPage, fetchArticles } from '../redux/actions'
+import Paginator from '../components/Paginator'
+
+const mapStateToProps = (state) => {
+  return {
+    curPage: state.curPage,
+    totalArticles: state.articles.totalArticles,
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onCurPageChange: (new_page) => {
+      dispatch(chooseOtherPage(new_page))
+      dispatch(fetchArticles())
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Paginator)

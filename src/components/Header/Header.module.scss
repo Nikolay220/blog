@@ -8,7 +8,7 @@
   padding-left: 22px;
   padding-right: 22px;
   &__left-col {
-    font-family: 'Inter';
+    font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -18,11 +18,12 @@
   &__right-col {
     display: flex;
     align-items: center;
+    margin-right: 22px;
   }
 }
 
 .btn {
-  font-family: 'Inter';
+  font-family: 'Inter',sans-serif;
   font-style: normal;
   font-weight: 400 !important;
   font-size: 18px !important;
@@ -31,7 +32,7 @@
     color: rgba(0, 0, 0, 0.85) !important;
     width: 84px;
     height: 35px !important;
-    margin-right: 30px;
+    margin-right: 17%;
   }
   &__sign-up {
     width: 109px;

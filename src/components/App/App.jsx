@@ -1,18 +1,25 @@
 import React from 'react'
+import { Redirect,Switch,BrowserRouter as Router, Route } from 'react-router-dom'
 
-// import CustomSpinner from '../CustomSpinner'
-import Header from '../Header'
-
+// import Header from '../Header'
 import 'antd/dist/antd.min.css'
+// import ArticlesListContainer from '../../containers/ArticlesListContainer'
+// import PaginatorContainer from '../../containers/PaginatorContainer'
+import ArticlesListPage from '../ArticlesListPage'
+
+
 import classes from './App.module.scss'
-import ArticlesList from '../ArticlesList'
 
 export default function App() {
   return (
     <div className={classes['app']}>
-      {/* <CustomSpinner /> */}
-      <Header />
-      <ArticlesList />
+      <Router>
+        <Switch>
+          <Route path = "/articles" component={ArticlesListPage}/>
+          <Route path = "/" component={ArticlesListPage}/>
+          <Redirect to="/" />
+        </Switch>
+      </Router>
     </div>
   )
 }

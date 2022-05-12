@@ -1,14 +1,23 @@
 import React, { useCallback } from 'react'
+import { Alert } from 'antd'
 
+import CustomSpinner from '../CustomSpinner'
 import ArticleItem from '../ArticleItem'
 const articlesPerPage = 5
-let id=1
-export default function ArticlesList() {
-  let articles = [{slug:'asfdaf-ibb4b7',title:'asfdaf',description:'adfsaf',body:'adfasf',createdAt:'2022-05-10T20:59:07.490Z',updatedAt:'2022-05-11T13:47:46.020Z',tagList:['kkk'],favorited:false,favoritesCount:2,author:{username:'kkkkkk',image:'https://www.google.ru/url?sa=i&url=https%3A%2F%2Fru.wikipedia.org%2Fwiki%2F%25D0%25A1%25D0%25B5%25D0%25BB%25D1%2584%25D0%25B8_%25D0%25BE%25D0%25B1%25D0%25B5%25D0%25B7%25D1%258C%25D1%258F%25D0%25BD%25D1%258B&psig=AOvVaw0-dez-5g7Wuz0-K9etv5DN&ust=1652310275845000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIjXkcuF1vcCFQAAAAAdAAAAABAD',following:false}},{slug:'asfdaf-ibb4b7',title:'asfdaf',description:'adfsaf',body:'adfasf',createdAt:'2022-05-10T20:59:07.490Z',updatedAt:'2022-05-11T13:47:46.020Z',tagList:['kkk'],favorited:false,favoritesCount:2,author:{username:'kkkkkk',image:'https://www.google.ru/url?sa=i&url=https%3A%2F%2Fru.wikipedia.org%2Fwiki%2F%25D0%25A1%25D0%25B5%25D0%25BB%25D1%2584%25D0%25B8_%25D0%25BE%25D0%25B1%25D0%25B5%25D0%25B7%25D1%258C%25D1%258F%25D0%25BD%25D1%258B&psig=AOvVaw0-dez-5g7Wuz0-K9etv5DN&ust=1652310275845000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIjXkcuF1vcCFQAAAAAdAAAAABAD',following:false}},{slug:'asfdaf-ibb4b7',title:'asfdaf',description:'adfsaf',body:'adfasf',createdAt:'2022-05-10T20:59:07.490Z',updatedAt:'2022-05-11T13:47:46.020Z',tagList:['kkk'],favorited:false,favoritesCount:2,author:{username:'kkkkkk',image:'https://www.google.ru/url?sa=i&url=https%3A%2F%2Fru.wikipedia.org%2Fwiki%2F%25D0%25A1%25D0%25B5%25D0%25BB%25D1%2584%25D0%25B8_%25D0%25BE%25D0%25B1%25D0%25B5%25D0%25B7%25D1%258C%25D1%258F%25D0%25BD%25D1%258B&psig=AOvVaw0-dez-5g7Wuz0-K9etv5DN&ust=1652310275845000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIjXkcuF1vcCFQAAAAAdAAAAABAD',following:false}},{slug:'asfdaf-ibb4b7',title:'asfdaf',description:'adfsaf',body:'adfasf',createdAt:'2022-05-10T20:59:07.490Z',updatedAt:'2022-05-11T13:47:46.020Z',tagList:['kkk'],favorited:false,favoritesCount:2,author:{username:'kkkkkk',image:'https://www.google.ru/url?sa=i&url=https%3A%2F%2Fru.wikipedia.org%2Fwiki%2F%25D0%25A1%25D0%25B5%25D0%25BB%25D1%2584%25D0%25B8_%25D0%25BE%25D0%25B1%25D0%25B5%25D0%25B7%25D1%258C%25D1%258F%25D0%25BD%25D1%258B&psig=AOvVaw0-dez-5g7Wuz0-K9etv5DN&ust=1652310275845000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIjXkcuF1vcCFQAAAAAdAAAAABAD',following:false}},{slug:'asfdaf-ibb4b7',title:'asfdaf',description:'adfsaf',body:'adfasf',createdAt:'2022-05-10T20:59:07.490Z',updatedAt:'2022-05-11T13:47:46.020Z',tagList:['kkk'],favorited:false,favoritesCount:2,author:{username:'kkkkkk',image:'https://www.google.ru/url?sa=i&url=https%3A%2F%2Fru.wikipedia.org%2Fwiki%2F%25D0%25A1%25D0%25B5%25D0%25BB%25D1%2584%25D0%25B8_%25D0%25BE%25D0%25B1%25D0%25B5%25D0%25B7%25D1%258C%25D1%258F%25D0%25BD%25D1%258B&psig=AOvVaw0-dez-5g7Wuz0-K9etv5DN&ust=1652310275845000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIjXkcuF1vcCFQAAAAAdAAAAABAD',following:false}},{slug:'asfdaf-ibb4b7',title:'asfdaf',description:'adfsaf',body:'adfasf',createdAt:'2022-05-10T20:59:07.490Z',updatedAt:'2022-05-11T13:47:46.020Z',tagList:['kkk'],favorited:false,favoritesCount:2,author:{username:'kkkkkk',image:'https://www.google.ru/url?sa=i&url=https%3A%2F%2Fru.wikipedia.org%2Fwiki%2F%25D0%25A1%25D0%25B5%25D0%25BB%25D1%2584%25D0%25B8_%25D0%25BE%25D0%25B1%25D0%25B5%25D0%25B7%25D1%258C%25D1%258F%25D0%25BD%25D1%258B&psig=AOvVaw0-dez-5g7Wuz0-K9etv5DN&ust=1652310275845000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIjXkcuF1vcCFQAAAAAdAAAAABAD',following:false}}]
-  let generateArticlesList = useCallback(() => {
+let id = 1
+export default function ArticlesList({articles,areFetching, error}) {
+  let generateArticlesList = useCallback((articles) => {
     let articlesItems = []
-    for (let i = 0; i < articlesPerPage; i++) articlesItems.push(<ArticleItem article={articles[i]}/>)
-    return articlesItems
+    for (let i = 0; i < articlesPerPage; i++) articlesItems.push(<ArticleItem key={++id} article={articles[i]} />)
+    return articlesItems 
   }, [])
-  return <div>{generateArticlesList()}</div>
+  if(error) return <Alert
+    style={{ maxWidth: '504px', margin:'auto', marginTop:'10px'}}
+    message="Error"
+    description={'Recommendations: ' + error.checksRecommendations + '. Mess:' + error.message + '.  Error name: ' + error.name + '.  Error stack: ' + error.stack}
+    type="error"
+    error={error.message}
+  />
+  if(areFetching) return <CustomSpinner/>
+  return <div>{generateArticlesList(articles)}</div>
 }

@@ -1,0 +1,35 @@
+.ant-pagination-item{
+  border-radius: 4px;
+}
+.ant-pagination-item-active {
+  background: #1890ff !important;
+  line-height: 21px !important;
+  a {
+    color: #ffffff !important;
+    background-color: #1890ff !important;
+    &:focus-visible {
+      a {
+        color: #fff !important;
+      }
+    }
+    &:hover {
+      a {
+        color: #fff !important;
+      }
+    }
+  }
+}
+.ant-pagination.mini .ant-pagination-item{
+  height: 22px;
+  min-width: 22px;
+  line-height: 19px !important;
+  margin-right: 7px;
+}
+
+.ant-pagination.mini .ant-pagination-prev{
+  margin-right: 12px;
+}
+
+.ant-pagination.mini .ant-pagination-next{
+  margin-left: 5px;
+}
