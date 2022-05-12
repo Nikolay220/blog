@@ -4,7 +4,7 @@ import { Pagination } from 'antd'
 import './Paginator.scss'
 import styles from './Paginator.module.scss'
 
-export default function Paginator({curPage,totalArticles,onCurPageChange}){  
+export default function Paginator({ curPage, totalArticles, onCurPageChange }) {
   return (
     <div className={styles['paginator-container']}>
       <Pagination

@@ -5,13 +5,13 @@
   margin: auto;
   margin-top: 26px;
   padding: 15px 14px 24px 16px;
-  font-family: 'Inter',sans-serif;
+  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 22px;
   filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
-  &__leftCol{
+  &__leftCol {
     padding-right: 85px;
   }
   &__rightCol {
@@ -20,24 +20,24 @@
     max-width: 141px;
   }
 }
-.aligned-row{
+.aligned-row {
   // display: flex;
   // align-items: center;
 }
-.article-title{
+.article-title {
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
   line-height: 28px;
 
-  color: #1890FF;
+  color: #1890ff;
   margin-right: 13px;
 }
-.article-likes{
+.article-likes {
   margin-right: 5px;
 }
-.favorites-count{
+.favorites-count {
   // font-family: 'Inter';
   // font-style: normal;
   // font-weight: 400;
@@ -48,10 +48,10 @@
   vertical-align: middle;
   display: inline-block;
 }
-.article-tags{
+.article-tags {
   margin-top: 4px;
 }
-.tag{
+.tag {
   display: inline-block;
   padding: 2px 6px;
   border: 1px solid rgba(0, 0, 0, 0.5);
@@ -63,34 +63,34 @@
   // font-size: 12px;
   line-height: 15px;
   color: rgba(0, 0, 0, 0.5);
-  &--choosed{
+  &--choosed {
     border: 1px solid rgb(0, 0, 0);
     color: rgb(0, 0, 0);
   }
 }
-.article-description{
+.article-description {
   line-height: 22px;
   color: rgba(0, 0, 0, 0.75);
   margin-top: 4px;
   max-width: 682px;
 }
 
-.author-image{
+.author-image {
   width: 46px;
   height: 46px;
 }
-.author_name{
+.author_name {
   font-size: 18px;
   line-height: 28px;
   color: rgba(0, 0, 0, 0.85);
 }
 
-.article_created{
+.article_created {
   color: rgba(0, 0, 0, 0.5);
   margin-top: -6px;
 }
 
-.articleItem-header{
+.articleItem-header {
   display: flex;
   justify-content: space-between;
 }
