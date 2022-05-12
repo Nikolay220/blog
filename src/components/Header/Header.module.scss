@@ -1,0 +1,41 @@
+.header {
+  display: flex;
+  width: 100%;
+  height: 80px;
+  background-color: #fff;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 22px;
+  padding-right: 22px;
+  &__left-col {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: rgba(0, 0, 0, 0.85);
+  }
+  &__right-col {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.btn {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 !important;
+  font-size: 18px !important;
+  line-height: 28px !important;
+  &__sign-in {
+    color: rgba(0, 0, 0, 0.85) !important;
+    width: 84px;
+    height: 35px !important;
+    margin-right: 30px;
+  }
+  &__sign-up {
+    width: 109px;
+    height: 51px !important;
+    box-shadow: none !important;
+  }
+}
