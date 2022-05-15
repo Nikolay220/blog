@@ -6,8 +6,6 @@ import ArticleItemContainer from '../../containers/ArticleItemContainer'
 const articlesPerPage = 5
 let id = 1
 export default function ArticlesList({ articles, fetching, error }) {
-  
-
   let generateArticlesList = useCallback((articles) => {
     let articlesItems = []
     for (let i = 0; i < articlesPerPage; i++) articlesItems.push(<ArticleItemContainer key={++id} article={articles[i]} />)

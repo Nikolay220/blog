@@ -16,12 +16,15 @@ export default function App() {
       <Router>
         <Header />
         <Switch>
-          <Route path="/articles/:id" render={({match})=>{
-            const {id}=match.params
-            return <ArticleItemContainer itemId={id}/>}
-          } />
+          <Route
+            path="/articles/:id"
+            render={({ match }) => {
+              const { id } = match.params
+              return <ArticleItemContainer itemId={id} />
+            }}
+          />
           <Route path="/articles" component={ArticlesListPage} />
-          <Route path="/" component={ArticlesListPage} />          
+          <Route path="/" component={ArticlesListPage} />
           <Redirect to="/" />
         </Switch>
       </Router>

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 import format from 'date-fns/format'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 
 import AppController from '../../services/AppController'
@@ -9,8 +9,8 @@ import CustomSpinner from '../CustomSpinner'
 import classes from './ArticleItem.module.scss'
 let id = 1
 export default function ArticleItem({ article, itemId, fetchArticle, fetching, curArticle }) {
-  let localArticle = itemId?curArticle?curArticle:article:article
-  
+  let localArticle = itemId ? (curArticle ? curArticle : article) : article
+
   let {
     slug,
     title,
@@ -19,8 +19,8 @@ export default function ArticleItem({ article, itemId, fetchArticle, fetching, c
     description,
     createdAt,
     author: { username, image },
-    body
-  } = localArticle  
+    body,
+  } = localArticle
   const f = useMemo(() => {
     let contr = new AppController(classes)
     return contr.classesToCssModulesFormat.bind(contr)
@@ -47,41 +47,19 @@ export default function ArticleItem({ article, itemId, fetchArticle, fetching, c
   const date = useMemo(() => {
     return new Date(createdAt)
   }, [])
-  
-  useEffect(()=>{
-    if(itemId)
-      fetchArticle(itemId)
-  },[itemId])
 
-  let shortItem=(<div className={f('articleItem')}>
-    <div className={f('articleItem-header')}>
-      <div className={f('articleItem__leftCol')}>
-        <div className={f('aligned-row')}>
-          <Link to={`/articles/${slug}`} className={f('article-title')}>{title}</Link>
-          <span className={f('article-likes')}>
-            <img src="/images/heart.png" alt="" style={{ marginBottom: '5px' }} />
-          </span>
-          <span className={f('favorites-count')}>{favoritesCount}</span>
-        </div>
-        <div className={f('article-tags')}>{tagsMarkup}</div>
-      </div>
-      <div className={f('articleItem__rightCol')}>
-        <div style={{ marginRight: '12px', textAlign: 'right' }}>
-          <div className={f('author_name')}>{username}</div>
-          <div className={f('article_created')}>{format(date, 'PP')}</div>
-        </div>
-        <img className={f('author-image')} src={image} alt="" />
-      </div>
-    </div>
-    <div className={f('article-description')}>{description}</div>
-  </div>)
+  useEffect(() => {
+    if (itemId) fetchArticle(itemId)
+  }, [itemId])
 
-  let fullItem=(
-    <div className={f('articleItem articleItem--full')}>
+  let shortItem = (
+    <div className={f('articleItem')}>
       <div className={f('articleItem-header')}>
         <div className={f('articleItem__leftCol')}>
           <div className={f('aligned-row')}>
-            <Link to={`/articles/${slug}`} className={f('article-title')}>{title}</Link>
+            <Link to={`/articles/${slug}`} className={f('article-title')}>
+              {title}
+            </Link>
             <span className={f('article-likes')}>
               <img src="/images/heart.png" alt="" style={{ marginBottom: '5px' }} />
             </span>
@@ -98,11 +76,41 @@ export default function ArticleItem({ article, itemId, fetchArticle, fetching, c
         </div>
       </div>
       <div className={f('article-description')}>{description}</div>
-      <div className={f('article-body')}><ReactMarkdown>{body}</ReactMarkdown></div>
-    </div>)
-  if(fetching) return <CustomSpinner />
-  return ( 
-    <React.Fragment>   
+    </div>
+  )
+
+  let fullItem = (
+    <div className={f('articleItem articleItem--full')}>
+      <div className={f('articleItem-header')}>
+        <div className={f('articleItem__leftCol')}>
+          <div className={f('aligned-row')}>
+            <Link to={`/articles/${slug}`} className={f('article-title')}>
+              {title}
+            </Link>
+            <span className={f('article-likes')}>
+              <img src="/images/heart.png" alt="" style={{ marginBottom: '5px' }} />
+            </span>
+            <span className={f('favorites-count')}>{favoritesCount}</span>
+          </div>
+          <div className={f('article-tags')}>{tagsMarkup}</div>
+        </div>
+        <div className={f('articleItem__rightCol')}>
+          <div style={{ marginRight: '12px', textAlign: 'right' }}>
+            <div className={f('author_name')}>{username}</div>
+            <div className={f('article_created')}>{format(date, 'PP')}</div>
+          </div>
+          <img className={f('author-image')} src={image} alt="" />
+        </div>
+      </div>
+      <div className={f('article-description')}>{description}</div>
+      <div className={f('article-body')}>
+        <ReactMarkdown>{body}</ReactMarkdown>
+      </div>
+    </div>
+  )
+  if (fetching) return <CustomSpinner />
+  return (
+    <React.Fragment>
       {itemId && fullItem}
       {!itemId && shortItem}
     </React.Fragment>
@@ -110,7 +118,7 @@ export default function ArticleItem({ article, itemId, fetchArticle, fetching, c
 }
 
 ArticleItem.defaultProps = {
-  article:{
+  article: {
     slug: '',
     title: '',
     description: '',
@@ -124,7 +132,9 @@ ArticleItem.defaultProps = {
       username: 'Gerome',
       bio: null,
       image: 'https://api.realworld.io/images/demo-avatar.png',
-      following: false
-    }
-  }, itemId:'', fetchArticle:false
+      following: false,
+    },
+  },
+  itemId: '',
+  fetchArticle: false,
 }
