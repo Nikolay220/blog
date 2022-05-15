@@ -3,6 +3,8 @@ import { combineReducers } from 'redux'
 import curPage from './curPage'
 import articles from './articles'
 import error from './error'
+import curArticle from './curArticle'
+import commonFetching from './commonFetching'
 // import updateFilterBtn from './updateFilterBtn'
 // import updateStopsCheckboxes from './updateStopsCheckboxes'
 // import updateTicketsList from './updateTicketsList'
@@ -10,7 +12,9 @@ import error from './error'
 const app = combineReducers({
   curPage,
   articles,
+  curArticle,
   error,
+  commonFetching,
 })
 // export default function app(state = {}, action) {
 //   return {

@@ -2,13 +2,15 @@ import React, { useCallback } from 'react'
 import { Alert } from 'antd'
 
 import CustomSpinner from '../CustomSpinner'
-import ArticleItem from '../ArticleItem'
+import ArticleItemContainer from '../../containers/ArticleItemContainer'
 const articlesPerPage = 5
 let id = 1
-export default function ArticlesList({ articles, areFetching, error }) {
+export default function ArticlesList({ articles, fetching, error }) {
+  
+
   let generateArticlesList = useCallback((articles) => {
     let articlesItems = []
-    for (let i = 0; i < articlesPerPage; i++) articlesItems.push(<ArticleItem key={++id} article={articles[i]} />)
+    for (let i = 0; i < articlesPerPage; i++) articlesItems.push(<ArticleItemContainer key={++id} article={articles[i]} />)
     return articlesItems
   }, [])
   if (error)
@@ -21,6 +23,6 @@ export default function ArticlesList({ articles, areFetching, error }) {
         error={error.message}
       />
     )
-  if (areFetching) return <CustomSpinner />
+  if (fetching) return <CustomSpinner />
   return <div>{generateArticlesList(articles)}</div>
 }

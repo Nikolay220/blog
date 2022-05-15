@@ -10,6 +10,7 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 22px;
+  border-radius: 5px;
   filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
   &__leftCol {
     padding-right: 85px;
@@ -19,10 +20,14 @@
     min-width: 141px;
     max-width: 141px;
   }
+  &--full {
+    border-radius: 0;
+    min-height:807px;
+    margin-bottom: 64px;
+  }
 }
-.aligned-row {
-  // display: flex;
-  // align-items: center;
+.article-body{
+  margin: 25px 28px 0 0;
 }
 .article-title {
   font-family: 'Inter', sans-serif;

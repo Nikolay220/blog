@@ -26,6 +26,21 @@ function receiveArticles(articles) {
   }
 }
 
+export const REQUEST_ARTICLE = 'REQUEST_ARTICLE'
+function requestArticle() {
+  return {
+    type: REQUEST_ARTICLE,
+  }
+}
+
+export const RECEIVE_ARTICLE = 'RECEIVE_ARTICLE'
+function receiveArticle(curArticle) {
+  return {
+    type: RECEIVE_ARTICLE,
+    curArticle,
+  }
+}
+
 export const UPDATE_TOTAL_ARTICLES = 'UPDATE_TOTAL_ARTICLES'
 export function updateTotalArticles(totalArticles) {
   return {
@@ -53,8 +68,25 @@ async function getArticles(dispatch) {
   dispatch(receiveArticles(articles.articles))
 }
 
+async function getArticle(dispatch, slug) {
+  dispatch(requestArticle())
+  let article
+  try {
+    article = await apiService.getArticle(slug)
+  } catch (error) {
+    dispatch(updateError(error))
+  }
+  dispatch(receiveArticle(article))
+}
+
 export function fetchArticles() {
   return (dispatch) => {
     getArticles(dispatch)
+  }
+}
+
+export function fetchArticle(slug) {
+  return (dispatch) => {
+    return getArticle(dispatch, slug)
   }
 }

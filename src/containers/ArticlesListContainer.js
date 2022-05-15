@@ -5,7 +5,7 @@ import ArticlesList from '../components/ArticlesList'
 const mapStateToProps = (state) => {
   return {
     articles: state.articles.articles,
-    areFetching: state.articles.areFetching,
+    fetching: state.commonFetching,
     error: state.error,
   }
 }
