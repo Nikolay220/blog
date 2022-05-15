@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from 'antd'
+import { Link } from 'react-router-dom'
 
 import classes from './Header.module.scss'
 import './Header.scss'
@@ -10,10 +11,10 @@ export default function Header() {
       <div className={classes['header__left-col']}>Realworld Blog</div>
       <div className={classes['header__right-col']}>
         <Button type="text" className={`${classes['btn']} ${classes['btn__sign-in']}`}>
-          Sign In
+          <Link to="/sign-in">Sign In</Link>
         </Button>
         <Button type="primary" ghost className={`${classes['btn']} ${classes['btn__sign-up']}`}>
-          Sign Up
+          <Link to="/sign-up">Sign Up</Link>
         </Button>
       </div>
     </div>

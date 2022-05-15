@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect, Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 
+import SignUp from '../SignUp'
 import Header from '../Header'
 import 'antd/dist/antd.min.css'
 // import ArticlesListContainer from '../../containers/ArticlesListContainer'
@@ -24,6 +25,7 @@ export default function App() {
             }}
           />
           <Route path="/articles" component={ArticlesListPage} />
+          <Route path="/sign-up" component={SignUp} />
           <Route path="/" component={ArticlesListPage} />
           <Redirect to="/" />
         </Switch>

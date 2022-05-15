@@ -53,9 +53,9 @@ export default function ArticleItem({ article, itemId, fetchArticle, fetching, c
   }, [itemId])
 
   let shortItem = (
-    <div className={f('articleItem')}>
-      <div className={f('articleItem-header')}>
-        <div className={f('articleItem__leftCol')}>
+    <div className={f('article-item')}>
+      <div className={f('article-item-header')}>
+        <div className={f('article-item__leftCol')}>
           <div className={f('aligned-row')}>
             <Link to={`/articles/${slug}`} className={f('article-title')}>
               {title}
@@ -67,7 +67,7 @@ export default function ArticleItem({ article, itemId, fetchArticle, fetching, c
           </div>
           <div className={f('article-tags')}>{tagsMarkup}</div>
         </div>
-        <div className={f('articleItem__rightCol')}>
+        <div className={f('article-item__rightCol')}>
           <div style={{ marginRight: '12px', textAlign: 'right' }}>
             <div className={f('author_name')}>{username}</div>
             <div className={f('article_created')}>{format(date, 'PP')}</div>
@@ -80,9 +80,9 @@ export default function ArticleItem({ article, itemId, fetchArticle, fetching, c
   )
 
   let fullItem = (
-    <div className={f('articleItem articleItem--full')}>
-      <div className={f('articleItem-header')}>
-        <div className={f('articleItem__leftCol')}>
+    <div className={f('article-item article-item--full')}>
+      <div className={f('article-item-header')}>
+        <div className={f('article-item__leftCol')}>
           <div className={f('aligned-row')}>
             <Link to={`/articles/${slug}`} className={f('article-title')}>
               {title}
@@ -94,7 +94,7 @@ export default function ArticleItem({ article, itemId, fetchArticle, fetching, c
           </div>
           <div className={f('article-tags')}>{tagsMarkup}</div>
         </div>
-        <div className={f('articleItem__rightCol')}>
+        <div className={f('article-item__rightCol')}>
           <div style={{ marginRight: '12px', textAlign: 'right' }}>
             <div className={f('author_name')}>{username}</div>
             <div className={f('article_created')}>{format(date, 'PP')}</div>
