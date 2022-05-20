@@ -1,0 +1,76 @@
+.header {
+  display: flex;
+  width: 100%;
+  height: 80px;
+  background-color: #fff;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 22px;
+  padding-right: 22px;
+  &__left-col {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: rgba(0, 0, 0, 0.85);
+  }
+  &__right-col {
+    display: flex;
+    align-items: center;
+  }
+  &__username {
+    display: inline-block;
+    margin-right: 13px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: rgba(0, 0, 0, 0.85);
+    vertical-align: middle;
+  }
+}
+
+.btn {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400 !important;
+  font-size: 18px !important;
+  line-height: 28px !important;
+  &__sign-in {
+    color: rgba(0, 0, 0, 0.85) !important;
+    width: 84px;
+    height: 35px !important;
+    margin-right: 17%;
+  }
+  &__sign-up {
+    width: 109px;
+    height: 51px !important;
+    box-shadow: none !important;
+    border: 1px solid #52c41a !important;
+    border-radius: 5px !important;
+    margin-right: 22px;
+  }
+  &__create-article {
+    border: 1px solid #52c41a !important;
+    border-radius: 5px !important;
+    width: 112.23px;
+    height: 31.1px;
+    font-family: 'Inter';
+    font-size: 14px !important;
+    line-height: 22px !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    margin-right: 27px;
+  }
+  &__log-out {
+    width: 109px;
+    height: 51px !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.75) !important;
+    border-radius: 5px !important;
+    color: rgba(0, 0, 0, 0.75) !important;
+    margin-left: 27px;
+  }
+}

@@ -8,7 +8,9 @@ import './Header.scss'
 export default function Header() {
   return (
     <div className={classes['header']}>
-      <div className={classes['header__left-col']}>Realworld Blog</div>
+      <Link to="/">
+        <div className={classes['header__left-col']}>Realworld Blog</div>
+      </Link>
       <div className={classes['header__right-col']}>
         <Button type="text" className={`${classes['btn']} ${classes['btn__sign-in']}`}>
           <Link to="/sign-in">Sign In</Link>

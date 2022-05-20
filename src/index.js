@@ -6,14 +6,18 @@ import { Offline, Online } from 'react-detect-offline'
 import { legacy_createStore as createStore, applyMiddleware, compose } from 'redux'
 import { Alert } from 'antd'
 
+import BlogApiService from './services/BlogApiService'
 import app from './redux/reducers'
 import '@babel/polyfill'
-import App from './components/App'
-import { fetchArticles } from './redux/actions'
-
+import { fetchArticles, addBlogService } from './redux/actions'
+import AppContainer from './containers/AppContainer'
 const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose
 const store = createStore(app, composeEnhancers(applyMiddleware(thunkMiddleware)))
+const blogService = new BlogApiService()
+
 store.dispatch(fetchArticles())
+store.dispatch(addBlogService(blogService))
+
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.Fragment>
@@ -22,7 +26,7 @@ root.render(
     </Offline>
     <Online>
       <Provider store={store}>
-        <App />
+        <AppContainer />
       </Provider>
     </Online>
   </React.Fragment>

@@ -9,7 +9,7 @@ import CustomSpinner from '../CustomSpinner'
 import classes from './ArticleItem.module.scss'
 let id = 1
 export default function ArticleItem({ article, itemId, fetchArticle, fetching, curArticle }) {
-  let localArticle = itemId ? (curArticle ? curArticle : article) : article
+  let localArticle = itemId ? (curArticle ? curArticle.article : article) : article
 
   let {
     slug,

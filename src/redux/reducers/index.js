@@ -5,25 +5,17 @@ import articles from './articles'
 import error from './error'
 import curArticle from './curArticle'
 import commonFetching from './commonFetching'
-// import updateFilterBtn from './updateFilterBtn'
-// import updateStopsCheckboxes from './updateStopsCheckboxes'
-// import updateTicketsList from './updateTicketsList'
-// import updateError from './updateError'
+import curProfile from './curProfile'
+import blog_service from './blog_service'
+import requestState from './requestState'
 const app = combineReducers({
   curPage,
   articles,
   curArticle,
   error,
   commonFetching,
+  curProfile,
+  blog_service,
+  requestState,
 })
-// export default function app(state = {}, action) {
-//   return {
-//     curPage: updateCurPage
-//     totalPages:
-//     sortFilter: updateFilterBtn(state.sortFilter, action),
-//     stopsCheckboxesNames: updateStopsCheckboxes(state.stopsCheckboxesNames, action),
-//     ticketsList: updateTicketsList(state.ticketsList, action),
-//     error: updateError(state.error, action),
-//   }
-// }
 export default app
