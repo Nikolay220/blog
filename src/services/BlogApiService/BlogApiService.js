@@ -2,10 +2,32 @@ import fetch from 'cross-fetch'
 
 import GetArticlesError from '../../Errors/GetArticlesError'
 import GetArticleError from '../../Errors/GetArticleError'
+import SessionStorageService from '../SessionStorageService'
 
 class BlogApiService {
   constructor() {
     this._base_url = 'https://kata.academy:8021/api'
+    this.token = SessionStorageService.getToken() ? SessionStorageService.getToken() : null
+  }
+  async deleteArticle(slug) {
+    // eslint-disable-next-line no-debugger
+    debugger
+    // try {
+    const response = await fetch(`${this._base_url}/articles?${slug}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${this.token}`,
+      },
+    })
+    // if (response.ok) {
+    return await response.json()
+    // } else {
+    //   throw new GetArticlesError(response.ok)
+    // }
+    // } catch (error) {
+    //   throw new GetArticlesError(error.message)
+    // }
   }
   async getArticles() {
     try {

@@ -1,4 +1,6 @@
 import BlogApiService from '../../services/BlogApiService'
+import DeleteArticleError from '../../Errors/DeleteArticleError'
+
 export const CHANGE_SORT_FILTER = 'CHANGE_SORT_FILTER'
 export const UPDATE_STOPS_CHECKBOXES = 'UPDATE_STOPS_CHECKBOXES'
 export const UPDATE_CHECK_ALL_CHECKBOX = 'UPDATE_CHECK_ALL_CHECKBOX'
@@ -24,6 +26,20 @@ export function chooseOtherPage(page) {
   return {
     type: CHOOSE_OTHER_PAGE,
     page,
+  }
+}
+
+export const REQUEST_ARTICLE_DELETE = 'REQUEST_ARTICLE_DELETE'
+export function requestArticleDelete() {
+  return {
+    type: REQUEST_ARTICLE_DELETE,
+  }
+}
+
+export const RECEIVE_ARTICLE_DELETE = 'RECEIVE_ARTICLE_DELETE'
+export function receiveArticleDelete() {
+  return {
+    type: RECEIVE_ARTICLE_DELETE,
   }
 }
 
@@ -59,6 +75,8 @@ function requestArticle() {
 
 export const RECEIVE_ARTICLE = 'RECEIVE_ARTICLE'
 function receiveArticle(curArticle) {
+  curArticle.isRemoved = false
+  curArticle.isRemoving = false
   return {
     type: RECEIVE_ARTICLE,
     curArticle,
@@ -123,7 +141,7 @@ async function getArticle(dispatch, slug) {
   } catch (error) {
     dispatch(updateError(error))
   }
-  dispatch(receiveArticle(article))
+  dispatch(receiveArticle(article.article))
 }
 
 export function fetchArticles() {
@@ -135,5 +153,25 @@ export function fetchArticles() {
 export function fetchArticle(slug) {
   return (dispatch) => {
     return getArticle(dispatch, slug)
+  }
+}
+
+export function deleteArticle(slug) {
+  return (dispatch) => {
+    dispatch(requestArticleDelete())
+    apiService.deleteArticle(slug).then(
+      (content) => {
+        // eslint-disable-next-line no-debugger
+        debugger
+        if (content.errors) {
+          dispatch(updateError(new DeleteArticleError(content.errors.message)))
+        } else {
+          dispatch(receiveArticleDelete())
+        }
+      },
+      (error) => {
+        dispatch(updateError(new DeleteArticleError(error.message)))
+      }
+    )
   }
 }

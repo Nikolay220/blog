@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import ReactDOMClient from 'react-dom/client'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import { Offline, Online } from 'react-detect-offline'
@@ -11,6 +11,7 @@ import app from './redux/reducers'
 import '@babel/polyfill'
 import { fetchArticles, addBlogService } from './redux/actions'
 import AppContainer from './containers/AppContainer'
+
 const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose
 const store = createStore(app, composeEnhancers(applyMiddleware(thunkMiddleware)))
 const blogService = new BlogApiService()
@@ -18,7 +19,7 @@ const blogService = new BlogApiService()
 store.dispatch(fetchArticles())
 store.dispatch(addBlogService(blogService))
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root = ReactDOMClient.createRoot(document.getElementById('root'))
 root.render(
   <React.Fragment>
     <Offline>
