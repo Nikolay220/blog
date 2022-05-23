@@ -12,8 +12,10 @@ export default function ArticlesList({ newArticle, articles, fetching, error, on
     return articlesItems
   }, [])
 
-  useEffect(()=>{return ()=>onCloseSuccessWin()},[])
-  
+  useEffect(() => {
+    return () => onCloseSuccessWin()
+  }, [])
+
   if (error)
     return (
       <Alert
@@ -25,17 +27,19 @@ export default function ArticlesList({ newArticle, articles, fetching, error, on
       />
     )
   if (fetching) return <CustomSpinner />
-  return <div>
-    {newArticle.isCreated&&(
-      <Alert
-        style={{ position: 'fixed', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', zIndex: '5' }}
-        message="New article is created"
-        type="success"
-        showIcon
-        closable
-        onClose={onCloseSuccessWin}
-      />
-    )}
-    {generateArticlesList(articles)}
-  </div>
+  return (
+    <div>
+      {newArticle.isCreated && (
+        <Alert
+          style={{ position: 'fixed', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', zIndex: '5' }}
+          message="New article is created"
+          type="success"
+          showIcon
+          closable
+          onClose={onCloseSuccessWin}
+        />
+      )}
+      {generateArticlesList(articles)}
+    </div>
+  )
 }

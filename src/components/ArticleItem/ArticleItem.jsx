@@ -10,7 +10,7 @@ import CustomSpinner from '../CustomSpinner'
 
 import classes from './ArticleItem.module.scss'
 let id = 1
-export default function ArticleItem({resetError, error, article, itemId, history, fetchArticle, fetching, curArticle, profileUsername, deleteArticle }) {
+export default function ArticleItem({ resetError, error, article, itemId, history, fetchArticle, fetching, curArticle, profileUsername, deleteArticle }) {
   let localArticle = itemId ? (curArticle ? curArticle : article) : article
   // eslint-disable-next-line no-debugger
   debugger
@@ -56,7 +56,7 @@ export default function ArticleItem({resetError, error, article, itemId, history
   const [isDeleteModalShown, setIsDeleteModalShown] = useState(false)
   useEffect(() => {
     if (itemId) fetchArticle(itemId)
-    return ()=>resetError()
+    return () => resetError()
   }, [itemId])
 
   let shortItem = (
