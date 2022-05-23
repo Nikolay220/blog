@@ -98,9 +98,7 @@ export default function ArticleItem({ error, article, itemId, history, fetchArti
           <div className={f('article-item-header__row article-item-header__row--first')}>
             <div className={f('article-item__leftCol')}>
               <div className={f('aligned-row')}>
-                <span className={f('article-title')}>
-                  {title}
-                </span>
+                <span className={f('article-title')}>{title}</span>
                 <span className={f('article-likes')}>
                   <img src="/images/heart.png" alt="" style={{ marginBottom: '5px' }} />
                 </span>
@@ -148,7 +146,7 @@ export default function ArticleItem({ error, article, itemId, history, fetchArti
                     </div>
                   </div>
                 )}
-                <Button onClick={()=>history.push('edit')} type="primary" ghost className={f('btn btn__edit')}>
+                <Button onClick={() => history.push('edit')} type="primary" ghost className={f('btn btn__edit')}>
                   Edit
                 </Button>
               </div>

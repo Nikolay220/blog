@@ -95,7 +95,7 @@
     color: #8c8c8c;
     margin-top: 8px;
   }
-  &__textarea{
+  &__textarea {
     width: 100%;
     height: 168px;
   }
@@ -117,11 +117,11 @@
       z-index: 4;
     }
   }
-  &__newArticle{
+  &__newArticle {
     max-width: 938px;
     margin-top: 34px;
     padding: 48px 32px;
-    min-height: unset;    
+    min-height: unset;
   }
 }
 
@@ -140,15 +140,15 @@
   color: #1890ff;
 }
 
-.input{
-  &__newArticle{
+.input {
+  &__newArticle {
     margin-bottom: 21px;
-    &--invalid{
+    &--invalid {
       border: 1px solid #f5222d;
       margin-bottom: 2px;
     }
   }
-  &__tag{
+  &__tag {
     margin-bottom: 3px;
     min-width: 300px;
     width: unset;
@@ -156,38 +156,38 @@
   }
 }
 
-.btn{
+.btn {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  &__delete{
+  &__delete {
     color: #f5222d !important;
     border-color: #f5222d !important;
     width: 118px;
     height: 40px !important;
     border-radius: 4px !important;
-    box-shadow: none !important;  
-    margin-bottom: 3px; 
-    margin-top: 2px; 
+    box-shadow: none !important;
+    margin-bottom: 3px;
+    margin-top: 2px;
     margin-right: 18px;
   }
-  &__add-tag{
-    color: #1890FF !important;
-    border-color: #1890FF !important;
+  &__add-tag {
+    color: #1890ff !important;
+    border-color: #1890ff !important;
     width: 136px;
     height: 40px !important;
     border-radius: 4px !important;
-    box-shadow: none !important;  
-    margin-bottom: 3px; 
-    margin-top: 2px;    
+    box-shadow: none !important;
+    margin-bottom: 3px;
+    margin-top: 2px;
   }
-  &__send{
+  &__send {
     margin-top: 18px;
     width: 319px !important;
     height: 40px !important;
-    background: #1890FF;
+    background: #1890ff;
     border-radius: 4px !important;
   }
 }

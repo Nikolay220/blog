@@ -67,7 +67,7 @@ export default function NewArticle({ blog_service, onError, serverErr, onAuth })
           <div>Title</div>
           <input
             {...register('title', {
-              required: 'This input is required.',              
+              required: 'This input is required.',
             })}
             placeholder="Title"
             className={f(
@@ -85,7 +85,7 @@ export default function NewArticle({ blog_service, onError, serverErr, onAuth })
           <div>Short description</div>
           <input
             {...register('description', {
-              required: 'This input is required.',              
+              required: 'This input is required.',
             })}
             placeholder="Title"
             className={f(
@@ -103,7 +103,7 @@ export default function NewArticle({ blog_service, onError, serverErr, onAuth })
           <div>Text</div>
           <textarea
             {...register('body', {
-              required: 'This input is required.',              
+              required: 'This input is required.',
             })}
             placeholder="Text"
             className={f(
@@ -117,23 +117,28 @@ export default function NewArticle({ blog_service, onError, serverErr, onAuth })
           />
         </label>
         {errors.body && <p className={f('error-mess')}>{errors.body.message}</p>}
-        <label className={f('form__label')} htmlFor="tag">Tags</label>
+        <label className={f('form__label')} htmlFor="tag">
+          Tags
+        </label>
         <div>
-          <input  className={f('form__input input__tag')}
-            type="text" value="default" disabled/>
-          <Button ghost danger className={f('btn btn__delete')} type="primary">Delete</Button>
+          <input className={f('form__input input__tag')} type="text" value="default" disabled />
+          <Button ghost danger className={f('btn btn__delete')} type="primary">
+            Delete
+          </Button>
         </div>
         <div>
-          <input className={f('form__input input__tag')}
-            type="text" id="tag" name="tag" placeholder="Tag" />
-          <Button ghost danger className={f('btn btn__delete')} type="primary">Delete</Button>
-          <Button ghost danger className={f('btn btn__add-tag')} type="primary">Add tag</Button>
+          <input className={f('form__input input__tag')} type="text" id="tag" name="tag" placeholder="Tag" />
+          <Button ghost danger className={f('btn btn__delete')} type="primary">
+            Delete
+          </Button>
+          <Button ghost danger className={f('btn btn__add-tag')} type="primary">
+            Add tag
+          </Button>
         </div>
-        
+
         <Button className={f('form__btn btn__send')} type="primary" block>
           <input type="submit" value="Send"></input>
         </Button>
-        
       </form>
     </div>
   )

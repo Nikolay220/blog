@@ -41,17 +41,16 @@ export default function App({ username, blogService, onInit, onUserRequest, user
               console.log(id)
               // eslint-disable-next-line no-debugger
               debugger
-              return <CustomSpinner/>
+              return <CustomSpinner />
             }}
           />
           <Route
             path="/articles/:id/"
             render={({ match, location, history }) => {
-              if (!location.pathname.endsWith('/')) 
-              {
-                history.push(location.pathname.trim()+'/')
-              }                
-              const { id } = match.params              
+              if (!location.pathname.endsWith('/')) {
+                history.push(location.pathname.trim() + '/')
+              }
+              const { id } = match.params
               return <ArticleItemContainer history={history} itemId={id} />
             }}
           />
