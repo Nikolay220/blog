@@ -9,6 +9,19 @@ class BlogApiService {
     this._base_url = 'https://kata.academy:8021/api'
     this.token = SessionStorageService.getToken() ? SessionStorageService.getToken() : null
   }
+  async createArticle(article) {
+    const response = await fetch(`${this._base_url}/articles`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${this.token}`,
+      },
+      body: JSON.stringify({ article }),
+    })
+    const content = await response.json()
+
+    return content
+  }
   async deleteArticle(slug) {
     // eslint-disable-next-line no-debugger
     debugger

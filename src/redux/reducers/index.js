@@ -8,6 +8,7 @@ import commonFetching from './commonFetching'
 import curProfile from './curProfile'
 import blog_service from './blog_service'
 import requestState from './requestState'
+import newArticle from './newArticle'
 const app = combineReducers({
   curPage,
   articles,
@@ -17,5 +18,6 @@ const app = combineReducers({
   curProfile,
   blog_service,
   requestState,
+  newArticle,
 })
 export default app

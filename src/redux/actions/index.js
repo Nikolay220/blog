@@ -1,5 +1,6 @@
 import BlogApiService from '../../services/BlogApiService'
 import DeleteArticleError from '../../Errors/DeleteArticleError'
+import CreateArticleError from '../../Errors/CreateArticleError'
 
 export const CHANGE_SORT_FILTER = 'CHANGE_SORT_FILTER'
 export const UPDATE_STOPS_CHECKBOXES = 'UPDATE_STOPS_CHECKBOXES'
@@ -29,15 +30,36 @@ export function chooseOtherPage(page) {
   }
 }
 
+export const FINISH_ARTICLE_CREATION = 'FINISH_ARTICLE_CREATION'
+export function finishArticleCreation() {
+  return {
+    type: FINISH_ARTICLE_CREATION,
+  }
+}
+
+export const REQUEST_ARTICLE_CREATION = 'REQUEST_ARTICLE_CREATION'
+function requestArticleCreation() {
+  return {
+    type: REQUEST_ARTICLE_CREATION,
+  }
+}
+
+export const RECEIVE_ARTICLE_CREATION = 'RECEIVE_ARTICLE_CREATION'
+function receiveArticleCreation() {
+  return {
+    type: RECEIVE_ARTICLE_CREATION,
+  }
+}
+
 export const REQUEST_ARTICLE_DELETE = 'REQUEST_ARTICLE_DELETE'
-export function requestArticleDelete() {
+function requestArticleDelete() {
   return {
     type: REQUEST_ARTICLE_DELETE,
   }
 }
 
 export const RECEIVE_ARTICLE_DELETE = 'RECEIVE_ARTICLE_DELETE'
-export function receiveArticleDelete() {
+function receiveArticleDelete() {
   return {
     type: RECEIVE_ARTICLE_DELETE,
   }
@@ -171,6 +193,26 @@ export function deleteArticle(slug) {
       },
       (error) => {
         dispatch(updateError(new DeleteArticleError(error.message)))
+      }
+    )
+  }
+}
+
+export function createArticle(article) {
+  return (dispatch) => {
+    dispatch(requestArticleCreation())
+    apiService.createArticle(article).then(
+      (content) => {
+        // eslint-disable-next-line no-debugger
+        debugger
+        if (content.errors) {
+          dispatch(updateError(new CreateArticleError(content.errors.message)))
+        } else {
+          dispatch(receiveArticleCreation())
+        }
+      },
+      (error) => {
+        dispatch(updateError(new CreateArticleError(error.message)))
       }
     )
   }

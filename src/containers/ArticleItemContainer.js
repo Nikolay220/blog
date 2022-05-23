@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import ArticleItem from '../components/ArticleItem'
-import { fetchArticle, deleteArticle } from '../redux/actions'
+import { fetchArticle, deleteArticle, updateError } from '../redux/actions'
 
 const mapStateToProps = (state, ownProps) => {
   // eslint-disable-next-line no-debugger
@@ -24,9 +24,9 @@ const mapDispatchToProps = (dispatch) => {
     deleteArticle: (slug) => {
       return dispatch(deleteArticle(slug))
     },
-    // onCloseErrorWin: () => {
-    //   dispatch(updateError(null))
-    // }
+    resetError: () => {
+      dispatch(updateError(null))
+    },
   }
 }
 

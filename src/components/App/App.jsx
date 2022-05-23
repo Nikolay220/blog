@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Redirect, Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 
-import CustomSpinner from '../CustomSpinner'
+
 import SignUpContainer from '../../containers/SignUpContainer'
 import SignInContainer from '../../containers/SignInContainer'
 import ProfileContainer from '../../containers/ProfileContainer'
@@ -12,11 +12,12 @@ import 'antd/dist/antd.min.css'
 import ArticleItemContainer from '../../containers/ArticleItemContainer'
 import ArticlesListPage from '../ArticlesListPage'
 import SessionStorageService from '../../services/SessionStorageService'
-import NewArticle from '../Forms/NewArticle'
+import NewArticleContainer from '../../containers/NewArticleContainer'
+import PrivateRoute from '../PrivateRoute'
 
 import classes from './App.module.scss'
 
-export default function App({ username, blogService, onInit, onUserRequest, userIsFetching }) {
+export default function App({  username, blogService, onInit, onUserRequest, userIsFetching }) {
   useEffect(() => {
     let savedToken = SessionStorageService.getToken()
     if (savedToken) {
@@ -41,7 +42,7 @@ export default function App({ username, blogService, onInit, onUserRequest, user
               console.log(id)
               // eslint-disable-next-line no-debugger
               debugger
-              return <CustomSpinner />
+              return <NewArticleContainer />
             }}
           />
           <Route
@@ -54,7 +55,8 @@ export default function App({ username, blogService, onInit, onUserRequest, user
               return <ArticleItemContainer history={history} itemId={id} />
             }}
           />
-          <Route path="/new-article" component={NewArticle} />
+          <PrivateRoute path="/new-article" isAuthenticated={SessionStorageService.getToken()}><NewArticleContainer/></PrivateRoute>  
+          {/* <Route path="/new-article" component={NewArticle} /> */}
           <Route path="/articles" component={ArticlesListPage} />
           <Route path="/sign-up" component={SignUpContainer} />
           <Route path="/sign-in" component={SignInContainer} />

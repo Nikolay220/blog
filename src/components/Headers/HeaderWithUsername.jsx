@@ -12,7 +12,7 @@ export default function HeaderWithUsername({ signOut, username }) {
       </Link>
       <div className={classes['header__right-col']}>
         <Button type="primary" ghost className={`${classes['btn']} ${classes['btn__create-article']}`}>
-          <Link to="/create-article">Create article</Link>
+          <Link to="/new-article">Create article</Link>
         </Button>
         <Link to="/profile">
           <span className={classes['header__username']}>{username}</span>
