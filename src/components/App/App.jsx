@@ -45,6 +45,7 @@ export default function App({ username, blogService, onInit, onUserRequest, user
           <Route path="/profile" component={ProfileContainer} />
           {/* <Route path="/create-article" component={Profile} />                    */}
           <Route path="/" component={ArticlesListPage} />
+          <Route path="/new-article" component={ArticlesListPage} />
           <Redirect to="/" />
         </Switch>
       </Router>

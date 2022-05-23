@@ -1,17 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import format from 'date-fns/format'
-import { Link , Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { Button, Alert } from 'antd'
-import {ExclamationCircleFilled} from '@ant-design/icons'
-
+import { ExclamationCircleFilled } from '@ant-design/icons'
 
 import AppController from '../../services/AppController'
 import CustomSpinner from '../CustomSpinner'
 
 import classes from './ArticleItem.module.scss'
 let id = 1
-export default function ArticleItem({error, article, itemId, fetchArticle, fetching, curArticle, profileUsername, deleteArticle }) {
+export default function ArticleItem({ error, article, itemId, fetchArticle, fetching, curArticle, profileUsername, deleteArticle }) {
   let localArticle = itemId ? (curArticle ? curArticle : article) : article
 
   let {
@@ -24,13 +23,13 @@ export default function ArticleItem({error, article, itemId, fetchArticle, fetch
     author: { username, image },
     body,
     isRemoved,
-    isRemoving
+    isRemoving,
   } = localArticle
   const f = useMemo(() => {
     let contr = new AppController(classes)
     return contr.classesToCssModulesFormat.bind(contr)
   }, [])
-  
+
   const tagsMarkup = () => {
     let tagsArr = []
     tagList.forEach((element, index) => {
@@ -82,7 +81,7 @@ export default function ArticleItem({error, article, itemId, fetchArticle, fetch
                   <div className={f('article_created')}>{format(date, 'PP')}</div>
                 </div>
                 <img className={f('author-image')} src={image} alt="" />
-              </div> 
+              </div>
             </div>
           </div>
         </div>
@@ -106,48 +105,55 @@ export default function ArticleItem({error, article, itemId, fetchArticle, fetch
                 </span>
                 <span className={f('favorites-count')}>{favoritesCount}</span>
               </div>
-              <div className={f('article-tags')}>{tagsMarkup()}</div>          
+              <div className={f('article-tags')}>{tagsMarkup()}</div>
             </div>
             <div className={f('article-item__rightCol rightCol')}>
-            
               <div style={{ marginRight: '12px', textAlign: 'right' }}>
                 <div className={f('author_name')}>{username}</div>
                 <div className={f('article_created')}>{format(date, 'PP')}</div>
               </div>
               <img className={f('author-image')} src={image} alt="" />
-            
             </div>
           </div>
           <div className={f('article-item-header__row')}>
             <div className={f('article-item__leftCol')}>
               <div className={f('article-description')}>{description}</div>
             </div>
-            {profileUsername && <div className={f('article-item__rightCol article-item__btns')}>
-              <Button onClick={()=>setIsDeleteModalShown(true)} ghost danger className={f('btn btn__delete')}>
-                Delete        
-              </Button>
-              {isDeleteModalShown && <div className={f('modal modal__on-delete-btn')}>
-                <img src="/images/arrow.png" alt="" className={f('modal__arrow')}/>
-                <span style={{whiteSpace:'wrap'}}><ExclamationCircleFilled style={{color:'#FAAD14'}}/> Are you sure to delete this article?</span>
-                <div className={f('modal__btns')}>
-                  <Button onClick={()=>setIsDeleteModalShown(false)} type="primary" ghost className={f('modal__btn modal__btn--no')}>
-                  No
-                  </Button>
-                  <Button onClick={()=>{
-                    setIsDeleteModalShown(false)
-                    deleteArticle(slug)
-                  }} type="primary" className={f('modal__btn modal__btn--yes')}>
-                  Yes
-                  </Button>
-                </div>
-              </div>}
-              <Button type="primary" ghost className={f('btn btn__edit')}>
-                Edit
-              </Button>
-            </div>}
+            {profileUsername && (
+              <div className={f('article-item__rightCol article-item__btns')}>
+                <Button onClick={() => setIsDeleteModalShown(true)} ghost danger className={f('btn btn__delete')}>
+                  Delete
+                </Button>
+                {isDeleteModalShown && (
+                  <div className={f('modal modal__on-delete-btn')}>
+                    <img src="/images/arrow.png" alt="" className={f('modal__arrow')} />
+                    <span style={{ whiteSpace: 'wrap' }}>
+                      <ExclamationCircleFilled style={{ color: '#FAAD14' }} /> Are you sure to delete this article?
+                    </span>
+                    <div className={f('modal__btns')}>
+                      <Button onClick={() => setIsDeleteModalShown(false)} type="primary" ghost className={f('modal__btn modal__btn--no')}>
+                        No
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          setIsDeleteModalShown(false)
+                          deleteArticle(slug)
+                        }}
+                        type="primary"
+                        className={f('modal__btn modal__btn--yes')}
+                      >
+                        Yes
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                <Button type="primary" ghost className={f('btn btn__edit')}>
+                  Edit
+                </Button>
+              </div>
+            )}
           </div>
-        
-        </div>      
+        </div>
         <div className={f('article-body')}>
           <ReactMarkdown>{body}</ReactMarkdown>
         </div>
@@ -158,7 +164,7 @@ export default function ArticleItem({error, article, itemId, fetchArticle, fetch
   if (!error && isRemoving) return <CustomSpinner />
   if (error)
     return (
-      <div style={{ width: '100vw', height: '100vh', position:'fixed', background:'rgba(0, 0, 0, 0.1)', top:'0', paddingTop:'120px'}}>
+      <div style={{ width: '100vw', height: '100vh', position: 'fixed', background: 'rgba(0, 0, 0, 0.1)', top: '0', paddingTop: '120px' }}>
         <Alert
           style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
           message="Error"
@@ -171,9 +177,9 @@ export default function ArticleItem({error, article, itemId, fetchArticle, fetch
       </div>
     )
   if (isRemoved) return <Redirect to="/" />
-  
+
   return (
-    <React.Fragment>      
+    <React.Fragment>
       {itemId && fullItem}
       {!itemId && shortItem}
     </React.Fragment>
