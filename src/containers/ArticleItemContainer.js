@@ -4,6 +4,8 @@ import ArticleItem from '../components/ArticleItem'
 import { fetchArticle, deleteArticle } from '../redux/actions'
 
 const mapStateToProps = (state, ownProps) => {
+  // eslint-disable-next-line no-debugger
+  debugger
   return {
     article: ownProps.article,
     itemId: ownProps.itemId,

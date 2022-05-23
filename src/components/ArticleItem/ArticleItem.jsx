@@ -10,9 +10,10 @@ import CustomSpinner from '../CustomSpinner'
 
 import classes from './ArticleItem.module.scss'
 let id = 1
-export default function ArticleItem({ error, article, itemId, fetchArticle, fetching, curArticle, profileUsername, deleteArticle }) {
+export default function ArticleItem({ error, article, itemId, history, fetchArticle, fetching, curArticle, profileUsername, deleteArticle }) {
   let localArticle = itemId ? (curArticle ? curArticle : article) : article
-
+  // eslint-disable-next-line no-debugger
+  debugger
   let {
     slug,
     title,
@@ -64,7 +65,7 @@ export default function ArticleItem({ error, article, itemId, fetchArticle, fetc
           <div className={f('article-item-header__row')}>
             <div className={f('article-item__leftCol')}>
               <div className={f('aligned-row')}>
-                <Link to={`/articles/${slug}`} className={f('article-title')}>
+                <Link to={`/articles/${slug}/`} className={f('article-title')}>
                   {title}
                 </Link>
                 <span className={f('article-likes')}>
@@ -97,9 +98,9 @@ export default function ArticleItem({ error, article, itemId, fetchArticle, fetc
           <div className={f('article-item-header__row article-item-header__row--first')}>
             <div className={f('article-item__leftCol')}>
               <div className={f('aligned-row')}>
-                <Link to={`/articles/${slug}`} className={f('article-title')}>
+                <span className={f('article-title')}>
                   {title}
-                </Link>
+                </span>
                 <span className={f('article-likes')}>
                   <img src="/images/heart.png" alt="" style={{ marginBottom: '5px' }} />
                 </span>
@@ -147,7 +148,7 @@ export default function ArticleItem({ error, article, itemId, fetchArticle, fetc
                     </div>
                   </div>
                 )}
-                <Button type="primary" ghost className={f('btn btn__edit')}>
+                <Button onClick={()=>history.push('edit')} type="primary" ghost className={f('btn btn__edit')}>
                   Edit
                 </Button>
               </div>

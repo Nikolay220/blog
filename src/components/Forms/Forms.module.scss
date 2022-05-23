@@ -14,8 +14,7 @@
 .form {
   box-sizing: border-box;
   padding: 48px 32px 42px;
-  gap: 21px;
-  width: 384px;
+  max-width: 384px;
   min-height: 599px;
   background: #ffffff;
   border: 1px solid #d9d9d9;
@@ -23,7 +22,6 @@
     0px 1.46302px 7.04911px rgba(0, 0, 0, 0.0282725), 0px 0.608796px 2.93329px rgba(0, 0, 0, 0.0196802);
   border-radius: 6px;
   margin: 59px auto 239px;
-
   &__btn {
     margin-top: 21px;
     height: 40px !important;
@@ -31,6 +29,11 @@
     box-shadow: none !important;
     border: none !important;
     padding: 0 !important;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
     &--sign-in {
       margin-top: 9px;
     }
@@ -92,6 +95,10 @@
     color: #8c8c8c;
     margin-top: 8px;
   }
+  &__textarea{
+    width: 100%;
+    height: 168px;
+  }
   &__sign-in {
     min-height: 374px;
   }
@@ -110,6 +117,12 @@
       z-index: 4;
     }
   }
+  &__newArticle{
+    max-width: 938px;
+    margin-top: 34px;
+    padding: 48px 32px;
+    min-height: unset;    
+  }
 }
 
 .form-header {
@@ -125,4 +138,56 @@
 
 .link {
   color: #1890ff;
+}
+
+.input{
+  &__newArticle{
+    margin-bottom: 21px;
+    &--invalid{
+      border: 1px solid #f5222d;
+      margin-bottom: 2px;
+    }
+  }
+  &__tag{
+    margin-bottom: 3px;
+    min-width: 300px;
+    width: unset;
+    margin-right: 18px;
+  }
+}
+
+.btn{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  &__delete{
+    color: #f5222d !important;
+    border-color: #f5222d !important;
+    width: 118px;
+    height: 40px !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;  
+    margin-bottom: 3px; 
+    margin-top: 2px; 
+    margin-right: 18px;
+  }
+  &__add-tag{
+    color: #1890FF !important;
+    border-color: #1890FF !important;
+    width: 136px;
+    height: 40px !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;  
+    margin-bottom: 3px; 
+    margin-top: 2px;    
+  }
+  &__send{
+    margin-top: 18px;
+    width: 319px !important;
+    height: 40px !important;
+    background: #1890FF;
+    border-radius: 4px !important;
+  }
 }
