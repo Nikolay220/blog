@@ -18,9 +18,9 @@ export default function SignUp({ resetError, blog_service, onError, serverErr, o
     formState: { errors },
     handleSubmit,
   } = useForm()
-  useEffect(()=>{
-    return ()=>resetError()
-  },[resetError])
+  useEffect(() => {
+    return () => resetError()
+  }, [resetError])
   const onSubmit = (data) => {
     if (data.password2 !== data.password) {
       setError('password2', { type: 'custom', message: 'Passwords must match' })

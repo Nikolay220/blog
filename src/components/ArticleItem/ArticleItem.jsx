@@ -57,7 +57,7 @@ export default function ArticleItem({ resetError, error, article, itemId, histor
   useEffect(() => {
     if (itemId) fetchArticle(itemId)
     return () => resetError()
-  }, [itemId,fetchArticle,resetError])
+  }, [itemId, fetchArticle, resetError])
 
   let shortItem = (
     <div className={f('article-item')}>

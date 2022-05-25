@@ -9,11 +9,12 @@ import SessionStorageService from '../../services/SessionStorageService'
 
 import classes from './Forms.module.scss'
 export default function Profile({ blog_service, onError, onCloseErrorWin, onCloseSuccessWin, onSuccess, onUsernameUpdate, serverErr, requestState }) {
-  useEffect(()=>{
-    return ()=>{
+  useEffect(() => {
+    return () => {
       onCloseSuccessWin()
-      onCloseErrorWin()}
-  },[onCloseSuccessWin,onCloseErrorWin])
+      onCloseErrorWin()
+    }
+  }, [onCloseSuccessWin, onCloseErrorWin])
   const f = useMemo(() => {
     let contr = new AppController(classes)
     return contr.classesToCssModulesFormat.bind(contr)

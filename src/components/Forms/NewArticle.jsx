@@ -10,64 +10,60 @@ import CustomSpinner from '../CustomSpinner'
 
 import classes from './Forms.module.scss'
 
-
 export default function NewArticle({ resetError, updateArticle, itemId, newArticle, serverErr, createArticle, curArticle }) {
- 
-  const [tagsList, updateTagsList] = useState(itemId?curArticle.article?curArticle.article.tagList:[]:[])
-  const [title, setTitle] = useState(itemId?curArticle.article?curArticle.article.title:'':'')
-  const [description, setDescription] = useState(itemId?curArticle.article?curArticle.article.description:'':'')
-  const [body, setBody] = useState(itemId?curArticle.article?curArticle.article.body:'':'')
+  const [tagsList, updateTagsList] = useState(itemId ? (curArticle.article ? curArticle.article.tagList : []) : [])
+  const [title, setTitle] = useState(itemId ? (curArticle.article ? curArticle.article.title : '') : '')
+  const [description, setDescription] = useState(itemId ? (curArticle.article ? curArticle.article.description : '') : '')
+  const [body, setBody] = useState(itemId ? (curArticle.article ? curArticle.article.body : '') : '')
   const addTagInput = useRef(null)
-  useEffect(()=>{
+  useEffect(() => {
     return () => resetError()
-  },[resetError])
+  }, [resetError])
   const f = useMemo(() => {
     let contr = new AppController(classes)
     return contr.classesToCssModulesFormat.bind(contr)
   }, [])
-  let generateTagsRows = useCallback((tagsList) => {
-    let tagRows = []
-    tagsList.forEach((value, index) => {
-      tagRows.push(
-        <div key={uuidv4()}>
-          <input className={f('form__input input__tag')} type="text" value={value} disabled />
-          <Button
-            onClick={() => {
-              updateTagsList((arr) => {
-                return arr.filter((word, inIndex) => inIndex !== index)
-              })
-            }}
-            ghost
-            danger
-            className={f('btn btn__delete')}
-            type="primary"
-          >
-            Delete
-          </Button>
-        </div>
-      )
-    })
-    return tagRows
-  }, [f])
+  let generateTagsRows = useCallback(
+    (tagsList) => {
+      let tagRows = []
+      tagsList.forEach((value, index) => {
+        tagRows.push(
+          <div key={uuidv4()}>
+            <input className={f('form__input input__tag')} type="text" value={value} disabled />
+            <Button
+              onClick={() => {
+                updateTagsList((arr) => {
+                  return arr.filter((word, inIndex) => inIndex !== index)
+                })
+              }}
+              ghost
+              danger
+              className={f('btn btn__delete')}
+              type="primary"
+            >
+              Delete
+            </Button>
+          </div>
+        )
+      })
+      return tagRows
+    },
+    [f]
+  )
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm()
   if (curArticle.isFetching) return <CustomSpinner />
- 
-  
-  
-  
+
   const onSubmit = (data) => {
     // eslint-disable-next-line no-debugger
     debugger
-    if(itemId)
-      updateArticle({ title: data.title, description: data.description, body: data.body }, itemId)
-    else
-      createArticle({ title: data.title, description: data.description, body: data.body, tagList: tagsList })
+    if (itemId) updateArticle({ title: data.title, description: data.description, body: data.body }, itemId)
+    else createArticle({ title: data.title, description: data.description, body: data.body, tagList: tagsList })
   }
-  
+
   if (serverErr)
     return (
       <div style={{ width: '100vw', height: '100vh', position: 'fixed', background: 'rgba(0, 0, 0, 0.1)', top: '0', paddingTop: '120px' }}>
@@ -81,58 +77,58 @@ export default function NewArticle({ resetError, updateArticle, itemId, newArtic
       </div>
     )
   let updateTagsFields
-  if(!itemId) 
-    updateTagsFields = 
-    <React.Fragment>
-      <label className={f('form__label')} htmlFor="tag">
-      Tags
-      </label>
-      {tagsList.length > 0 && generateTagsRows(tagsList)}
-      <div>
-        <input ref={addTagInput} className={f('form__input input__tag')} type="text" id="tag" name="tag" placeholder="Tag" />
-        <Button
-          onClick={() => {
-            addTagInput.current.value = ''
-          }}
-          ghost
-          danger
-          className={f('btn btn__delete')}
-          type="primary"
-        >
-        Delete
-        </Button>
-        <Button
-          onClick={() => {
-            if (addTagInput.current.value.trim())
-              updateTagsList((arr) => {
-                let arrCopy = [...arr]
-                arrCopy.push(addTagInput.current.value.trim())
-                addTagInput.current.value = ''
-                return arrCopy
-              })
-          }}
-          ghost
-          danger
-          className={f('btn btn__add-tag')}
-          type="primary"
-        >
-        Add tag
-        </Button>
-      </div>
-    </React.Fragment>
-    
+  if (!itemId)
+    updateTagsFields = (
+      <React.Fragment>
+        <label className={f('form__label')} htmlFor="tag">
+          Tags
+        </label>
+        {tagsList.length > 0 && generateTagsRows(tagsList)}
+        <div>
+          <input ref={addTagInput} className={f('form__input input__tag')} type="text" id="tag" name="tag" placeholder="Tag" />
+          <Button
+            onClick={() => {
+              addTagInput.current.value = ''
+            }}
+            ghost
+            danger
+            className={f('btn btn__delete')}
+            type="primary"
+          >
+            Delete
+          </Button>
+          <Button
+            onClick={() => {
+              if (addTagInput.current.value.trim())
+                updateTagsList((arr) => {
+                  let arrCopy = [...arr]
+                  arrCopy.push(addTagInput.current.value.trim())
+                  addTagInput.current.value = ''
+                  return arrCopy
+                })
+            }}
+            ghost
+            danger
+            className={f('btn btn__add-tag')}
+            type="primary"
+          >
+            Add tag
+          </Button>
+        </div>
+      </React.Fragment>
+    )
+
   // }
   // if (curArticle.isFetching) return <CustomSpinner />
   if (newArticle.isCreating || curArticle.isUpdating) return <CustomSpinner />
-  if (newArticle.isCreated) return <Redirect to="/" />  
+  if (newArticle.isCreated) return <Redirect to="/" />
   // eslint-disable-next-line no-debugger
   debugger
   if (curArticle.isUpdated) return <Redirect to={`/articles/${itemId}/`} />
-  
 
   return (
     <div className={f('form form__newArticle')}>
-      <div className={f('form-header')}>{itemId?'Edit article':'Create new article'}</div>
+      <div className={f('form-header')}>{itemId ? 'Edit article' : 'Create new article'}</div>
       <form onSubmit={handleSubmit(onSubmit)} className={f('form__form')}>
         <label className={f('form__label')} htmlFor="title">
           <div>Title</div>
@@ -150,7 +146,7 @@ export default function NewArticle({ resetError, updateArticle, itemId, newArtic
             id="title"
             type="text"
             value={title}
-            onChange={(e)=>setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </label>
         {errors.title && <p className={f('error-mess')}>{errors.title.message}</p>}
@@ -170,7 +166,7 @@ export default function NewArticle({ resetError, updateArticle, itemId, newArtic
             id="description"
             type="text"
             value={description}
-            onChange={(e)=>setDescription(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </label>
         {errors.description && <p className={f('error-mess')}>{errors.description.message}</p>}
@@ -190,7 +186,7 @@ export default function NewArticle({ resetError, updateArticle, itemId, newArtic
             id="body"
             type="text"
             value={body}
-            onChange={(e)=>setBody(e.target.value)}
+            onChange={(e) => setBody(e.target.value)}
           />
         </label>
         {errors.body && <p className={f('error-mess')}>{errors.body.message}</p>}
