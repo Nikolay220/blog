@@ -1,20 +1,30 @@
-import React, { useMemo, useCallback, useState, useRef } from 'react'
+import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react'
 import { Alert, Button } from 'antd'
 import { Redirect } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import { v4 as uuidv4 } from 'uuid'
 
-// import SessionStorageService from '../../services/SessionStorageService'
-// import SignUpError from '../../Errors/SignUpError'
 import AppController from '../../services/AppController'
 import CustomSpinner from '../CustomSpinner'
 
 import classes from './Forms.module.scss'
 
-export default function NewArticle({ newArticle, serverErr, createArticle }) {
-  const [tagsList, updateTagsList] = useState([])
+
+export default function NewArticle({ resetError, updateArticle, itemId, newArticle, serverErr, createArticle, curArticle }) {
+ 
+  const [tagsList, updateTagsList] = useState(itemId?curArticle.article?curArticle.article.tagList:[]:[])
+  const [title, setTitle] = useState(itemId?curArticle.article?curArticle.article.title:'':'')
+  const [description, setDescription] = useState(itemId?curArticle.article?curArticle.article.description:'':'')
+  const [body, setBody] = useState(itemId?curArticle.article?curArticle.article.body:'':'')
   const addTagInput = useRef(null)
+  useEffect(()=>{
+    return () => resetError()
+  },[resetError])
+  const f = useMemo(() => {
+    let contr = new AppController(classes)
+    return contr.classesToCssModulesFormat.bind(contr)
+  }, [])
   let generateTagsRows = useCallback((tagsList) => {
     let tagRows = []
     tagsList.forEach((value, index) => {
@@ -38,41 +48,91 @@ export default function NewArticle({ newArticle, serverErr, createArticle }) {
       )
     })
     return tagRows
-  }, [])
+  }, [f])
   const {
     register,
-    // setError,
     formState: { errors },
     handleSubmit,
   } = useForm()
-
+  if (curArticle.isFetching) return <CustomSpinner />
+ 
+  
+  
+  
   const onSubmit = (data) => {
-    createArticle({ title: data.title, description: data.description, body: data.body, tagList: tagsList })
-    // if (data.password2 !== data.password) {
-    //   setError('password2', { type: 'custom', message: 'Passwords must match' })
-    //   return
-    // }
+    // eslint-disable-next-line no-debugger
+    debugger
+    if(itemId)
+      updateArticle({ title: data.title, description: data.description, body: data.body }, itemId)
+    else
+      createArticle({ title: data.title, description: data.description, body: data.body, tagList: tagsList })
   }
-  const f = useMemo(() => {
-    let contr = new AppController(classes)
-    return contr.classesToCssModulesFormat.bind(contr)
-  }, [])
+  
   if (serverErr)
     return (
-      <Alert
-        style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
-        message="Error"
-        description={'Recommendations: ' + serverErr.checksRecommendations + '. Mess:' + serverErr.message + '.  Error name: ' + serverErr.name + '.  Error stack: ' + serverErr.stack}
-        type="error"
-        error={serverErr.message}
-      />
+      <div style={{ width: '100vw', height: '100vh', position: 'fixed', background: 'rgba(0, 0, 0, 0.1)', top: '0', paddingTop: '120px' }}>
+        <Alert
+          style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
+          message="Error"
+          description={'Recommendations: ' + serverErr.checksRecommendations + '. Mess:' + serverErr.message + '.  Error name: ' + serverErr.name + '.  Error stack: ' + serverErr.stack}
+          type="error"
+          error={serverErr.message}
+        />
+      </div>
     )
-  if (newArticle.isCreating) return <CustomSpinner />
-  if (newArticle.isCreated) return <Redirect to="/" />
+  let updateTagsFields
+  if(!itemId) 
+    updateTagsFields = 
+    <React.Fragment>
+      <label className={f('form__label')} htmlFor="tag">
+      Tags
+      </label>
+      {tagsList.length > 0 && generateTagsRows(tagsList)}
+      <div>
+        <input ref={addTagInput} className={f('form__input input__tag')} type="text" id="tag" name="tag" placeholder="Tag" />
+        <Button
+          onClick={() => {
+            addTagInput.current.value = ''
+          }}
+          ghost
+          danger
+          className={f('btn btn__delete')}
+          type="primary"
+        >
+        Delete
+        </Button>
+        <Button
+          onClick={() => {
+            if (addTagInput.current.value.trim())
+              updateTagsList((arr) => {
+                let arrCopy = [...arr]
+                arrCopy.push(addTagInput.current.value.trim())
+                addTagInput.current.value = ''
+                return arrCopy
+              })
+          }}
+          ghost
+          danger
+          className={f('btn btn__add-tag')}
+          type="primary"
+        >
+        Add tag
+        </Button>
+      </div>
+    </React.Fragment>
+    
+  // }
+  // if (curArticle.isFetching) return <CustomSpinner />
+  if (newArticle.isCreating || curArticle.isUpdating) return <CustomSpinner />
+  if (newArticle.isCreated) return <Redirect to="/" />  
+  // eslint-disable-next-line no-debugger
+  debugger
+  if (curArticle.isUpdated) return <Redirect to={`/articles/${itemId}/`} />
+  
 
   return (
     <div className={f('form form__newArticle')}>
-      <div className={f('form-header')}>Create new article</div>
+      <div className={f('form-header')}>{itemId?'Edit article':'Create new article'}</div>
       <form onSubmit={handleSubmit(onSubmit)} className={f('form__form')}>
         <label className={f('form__label')} htmlFor="title">
           <div>Title</div>
@@ -89,6 +149,8 @@ export default function NewArticle({ newArticle, serverErr, createArticle }) {
             )}
             id="title"
             type="text"
+            value={title}
+            onChange={(e)=>setTitle(e.target.value)}
           />
         </label>
         {errors.title && <p className={f('error-mess')}>{errors.title.message}</p>}
@@ -107,6 +169,8 @@ export default function NewArticle({ newArticle, serverErr, createArticle }) {
             )}
             id="description"
             type="text"
+            value={description}
+            onChange={(e)=>setDescription(e.target.value)}
           />
         </label>
         {errors.description && <p className={f('error-mess')}>{errors.description.message}</p>}
@@ -125,51 +189,12 @@ export default function NewArticle({ newArticle, serverErr, createArticle }) {
             )}
             id="body"
             type="text"
+            value={body}
+            onChange={(e)=>setBody(e.target.value)}
           />
         </label>
         {errors.body && <p className={f('error-mess')}>{errors.body.message}</p>}
-        <label className={f('form__label')} htmlFor="tag">
-          Tags
-        </label>
-        {tagsList.length > 0 && generateTagsRows(tagsList)}
-        {/* <div>
-          <input className={f('form__input input__tag')} type="text" value="default" disabled />
-          <Button ghost danger className={f('btn btn__delete')} type="primary">
-            Delete
-          </Button>
-        </div> */}
-        <div>
-          <input ref={addTagInput} className={f('form__input input__tag')} type="text" id="tag" name="tag" placeholder="Tag" />
-          <Button
-            onClick={() => {
-              addTagInput.current.value = ''
-            }}
-            ghost
-            danger
-            className={f('btn btn__delete')}
-            type="primary"
-          >
-            Delete
-          </Button>
-          <Button
-            onClick={() => {
-              if (addTagInput.current.value.trim())
-                updateTagsList((arr) => {
-                  let arrCopy = [...arr]
-                  arrCopy.push(addTagInput.current.value.trim())
-                  return arrCopy
-                })
-              addTagInput.current.value = ''
-            }}
-            ghost
-            danger
-            className={f('btn btn__add-tag')}
-            type="primary"
-          >
-            Add tag
-          </Button>
-        </div>
-
+        {!itemId && updateTagsFields}
         <Button className={f('form__btn btn__send')} type="primary" block>
           <input type="submit" value="Send"></input>
         </Button>

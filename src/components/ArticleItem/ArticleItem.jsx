@@ -10,8 +10,8 @@ import CustomSpinner from '../CustomSpinner'
 
 import classes from './ArticleItem.module.scss'
 let id = 1
-export default function ArticleItem({ resetError, error, article, itemId, history, fetchArticle, fetching, curArticle, profileUsername, deleteArticle }) {
-  let localArticle = itemId ? (curArticle ? curArticle : article) : article
+export default function ArticleItem({ resetError, error, article, itemId, history, fetchArticle, curArticle, profileUsername, deleteArticle }) {
+  let localArticle = itemId ? (curArticle.article ? curArticle.article : article) : article
   // eslint-disable-next-line no-debugger
   debugger
   let {
@@ -52,12 +52,12 @@ export default function ArticleItem({ resetError, error, article, itemId, histor
   }
   const date = useMemo(() => {
     return new Date(createdAt)
-  }, [])
+  }, [createdAt])
   const [isDeleteModalShown, setIsDeleteModalShown] = useState(false)
   useEffect(() => {
     if (itemId) fetchArticle(itemId)
     return () => resetError()
-  }, [itemId])
+  }, [itemId,fetchArticle,resetError])
 
   let shortItem = (
     <div className={f('article-item')}>
@@ -160,7 +160,7 @@ export default function ArticleItem({ resetError, error, article, itemId, histor
       </div>
     </div>
   )
-  if (fetching) return <CustomSpinner />
+  if (curArticle.isFetching) return <CustomSpinner />
   if (!error && isRemoving) return <CustomSpinner />
   if (error)
     return (

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo, useRef, useEffect } from 'react'
 import { Button, Alert } from 'antd'
 import { Link, Redirect } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -10,7 +10,7 @@ import AppController from '../../services/AppController'
 
 import classes from './Forms.module.scss'
 
-export default function SignUp({ blog_service, onError, serverErr, onAuth, username }) {
+export default function SignUp({ resetError, blog_service, onError, serverErr, onAuth, username }) {
   const checkboxCont = useRef(null)
   const {
     register,
@@ -18,7 +18,9 @@ export default function SignUp({ blog_service, onError, serverErr, onAuth, usern
     formState: { errors },
     handleSubmit,
   } = useForm()
-
+  useEffect(()=>{
+    return ()=>resetError()
+  },[resetError])
   const onSubmit = (data) => {
     if (data.password2 !== data.password) {
       setError('password2', { type: 'custom', message: 'Passwords must match' })
@@ -50,13 +52,15 @@ export default function SignUp({ blog_service, onError, serverErr, onAuth, usern
   }, [])
   if (serverErr)
     return (
-      <Alert
-        style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
-        message="Error"
-        description={'Recommendations: ' + serverErr.checksRecommendations + '. Mess:' + serverErr.message + '.  Error name: ' + serverErr.name + '.  Error stack: ' + serverErr.stack}
-        type="error"
-        error={serverErr.message}
-      />
+      <div style={{ width: '100vw', height: '100vh', position: 'fixed', background: 'rgba(0, 0, 0, 0.1)', top: '0', paddingTop: '120px' }}>
+        <Alert
+          style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
+          message="Error"
+          description={'Recommendations: ' + serverErr.checksRecommendations + '. Mess:' + serverErr.message + '.  Error name: ' + serverErr.name + '.  Error stack: ' + serverErr.stack}
+          type="error"
+          error={serverErr.message}
+        />
+      </div>
     )
   if (username) return <Redirect to="/" />
   return (

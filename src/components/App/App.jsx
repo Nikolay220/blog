@@ -16,7 +16,7 @@ import PrivateRoute from '../PrivateRoute'
 
 import classes from './App.module.scss'
 
-export default function App({ username, blogService, onInit, onUserRequest, userIsFetching }) {
+export default function App({  username, blogService, onInit, onUserRequest, userIsFetching }) {
   useEffect(() => {
     let savedToken = SessionStorageService.getToken()
     if (savedToken) {
@@ -28,7 +28,7 @@ export default function App({ username, blogService, onInit, onUserRequest, user
         })
         .catch(() => {})
     }
-  }, [])
+  }, [blogService,onInit,onUserRequest])
   return (
     <div className={classes['app']}>
       <Router>
@@ -38,10 +38,13 @@ export default function App({ username, blogService, onInit, onUserRequest, user
             path="/articles/:id/edit"
             render={({ match }) => {
               const { id } = match.params
-              console.log(id)
+              // console.log(id)
               // eslint-disable-next-line no-debugger
               debugger
-              return <NewArticleContainer />
+              
+              // if(!curArticle.article) fetchArticle(id)
+              
+              return <NewArticleContainer itemId={id}/>
             }}
           />
           <Route

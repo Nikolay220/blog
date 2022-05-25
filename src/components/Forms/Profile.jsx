@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useEffect } from 'react'
 import { Button, Alert } from 'antd'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
@@ -9,6 +9,11 @@ import SessionStorageService from '../../services/SessionStorageService'
 
 import classes from './Forms.module.scss'
 export default function Profile({ blog_service, onError, onCloseErrorWin, onCloseSuccessWin, onSuccess, onUsernameUpdate, serverErr, requestState }) {
+  useEffect(()=>{
+    return ()=>{
+      onCloseSuccessWin()
+      onCloseErrorWin()}
+  },[onCloseSuccessWin,onCloseErrorWin])
   const f = useMemo(() => {
     let contr = new AppController(classes)
     return contr.classesToCssModulesFormat.bind(contr)

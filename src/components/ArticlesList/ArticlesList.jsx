@@ -14,17 +14,19 @@ export default function ArticlesList({ newArticle, articles, fetching, error, on
 
   useEffect(() => {
     return () => onCloseSuccessWin()
-  }, [])
+  }, [onCloseSuccessWin])
 
   if (error)
     return (
-      <Alert
-        style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
-        message="Error"
-        description={'Recommendations: ' + error.checksRecommendations + '. Mess:' + error.message + '.  Error name: ' + error.name + '.  Error stack: ' + error.stack}
-        type="error"
-        error={error.message}
-      />
+      <div style={{ width: '100vw', height: '100vh', position: 'fixed', background: 'rgba(0, 0, 0, 0.1)', top: '0', paddingTop: '120px' }}>
+        <Alert
+          style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
+          message="Error"
+          description={'Recommendations: ' + error.checksRecommendations + '. Mess:' + error.message + '.  Error name: ' + error.name + '.  Error stack: ' + error.stack}
+          type="error"
+          error={error.message}
+        />
+      </div>
     )
   if (fetching) return <CustomSpinner />
   return (

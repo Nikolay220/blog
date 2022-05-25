@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch) => {
     onAuth: (username, image) => {
       dispatch(signIn(username, image))
     },
+    resetError: () => dispatch(updateError(null)),
   }
 }
 

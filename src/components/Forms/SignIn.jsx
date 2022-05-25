@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useEffect } from 'react'
 import { Button, Alert } from 'antd'
 import { Link, Redirect } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -11,6 +11,9 @@ import AppController from '../../services/AppController'
 import classes from './Forms.module.scss'
 
 export default function SignIn({ blog_service, onError, onClose, onAuth, serverErr, username }) {
+  useEffect(()=>{
+    return ()=>{onClose()}
+  },[onClose])
   const {
     register,
     formState: { errors },

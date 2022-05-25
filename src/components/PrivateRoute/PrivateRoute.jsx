@@ -4,11 +4,7 @@ function PrivateRoute({ children, isAuthenticated, ...rest }) {
   let returnedComponent = isAuthenticated ? (
     children
   ) : (
-    <Redirect
-      to={{
-        pathname: '/sign-in',
-      }}
-    />
+    <Redirect to="/" />
   )
   return <Route {...rest} render={() => returnedComponent} />
 }

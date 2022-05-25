@@ -1,11 +1,12 @@
 import BlogApiService from '../../services/BlogApiService'
 import DeleteArticleError from '../../Errors/DeleteArticleError'
 import CreateArticleError from '../../Errors/CreateArticleError'
+import UpdateArticleError from '../../Errors/UpdateArticleError'
 
 export const CHANGE_SORT_FILTER = 'CHANGE_SORT_FILTER'
 export const UPDATE_STOPS_CHECKBOXES = 'UPDATE_STOPS_CHECKBOXES'
 export const UPDATE_CHECK_ALL_CHECKBOX = 'UPDATE_CHECK_ALL_CHECKBOX'
-
+export const UPDATE_ARTICLE = 'UPDATE_ARTICLE'
 export const SIGN_OUT = 'SIGN_OUT'
 export function signOut() {
   return {
@@ -34,6 +35,35 @@ export const FINISH_ARTICLE_CREATION = 'FINISH_ARTICLE_CREATION'
 export function finishArticleCreation() {
   return {
     type: FINISH_ARTICLE_CREATION,
+  }
+}
+
+export const REQUEST_ARTICLE_UPDATE = 'REQUEST_ARTICLE_UPDATE'
+function requestArticleUpdate() {
+  return {
+    type: REQUEST_ARTICLE_UPDATE,
+  }
+}
+
+export const RECEIVE_ARTICLE_UPDATE = 'RECEIVE_ARTICLE_UPDATE'
+function receiveArticleUpdate() {
+  return {
+    type: RECEIVE_ARTICLE_UPDATE,
+  }
+}
+
+export const FINISH_ARTICLE_UPDATE = 'FINISH_ARTICLE_UPDATE'
+function finishArticleUpdate(curArticle) {
+  return {
+    type: FINISH_ARTICLE_UPDATE,
+    curArticle,
+  }
+}
+
+export const ARTICLE_UPDATE_IS_FAILED = 'ARTICLE_UPDATE_IS_FAILED'
+function articleUpdateIsFailed() {
+  return {
+    type: ARTICLE_UPDATE_IS_FAILED,
   }
 }
 
@@ -97,8 +127,6 @@ function requestArticle() {
 
 export const RECEIVE_ARTICLE = 'RECEIVE_ARTICLE'
 function receiveArticle(curArticle) {
-  curArticle.isRemoved = false
-  curArticle.isRemoving = false
   return {
     type: RECEIVE_ARTICLE,
     curArticle,
@@ -213,6 +241,29 @@ export function createArticle(article) {
       },
       (error) => {
         dispatch(updateError(new CreateArticleError(error.message)))
+      }
+    )
+  }
+}
+
+export function updateArticle(article, slug) {
+  return (dispatch) => {
+    dispatch(requestArticleUpdate())
+    apiService.updateArticle(article, slug).then(
+      (content) => {
+        // eslint-disable-next-line no-debugger
+        debugger
+        if (content.errors) {
+          dispatch(updateError(new UpdateArticleError(content.errors.message)))
+          dispatch(articleUpdateIsFailed())
+        } else {
+          dispatch(receiveArticleUpdate())
+          dispatch(finishArticleUpdate(content.article))
+        }
+      },
+      (error) => {
+        dispatch(updateError(new UpdateArticleError(error.message)))
+        dispatch(articleUpdateIsFailed())
       }
     )
   }

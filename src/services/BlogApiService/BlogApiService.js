@@ -22,6 +22,18 @@ class BlogApiService {
 
     return content
   }
+  async updateArticle(article, slug) {
+    const response = await fetch(`${this._base_url}/articles/${slug}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${this.token}`,
+      },
+      body: JSON.stringify({ article }),
+    })
+    const content = await response.json()
+    return content
+  }
   async deleteArticle(slug) {
     // eslint-disable-next-line no-debugger
     debugger

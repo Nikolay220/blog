@@ -9,7 +9,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     article: ownProps.article,
     itemId: ownProps.itemId,
-    fetching: state.commonFetching,
     curArticle: state.curArticle,
     profileUsername: state.curProfile.username,
     error: state.error,
