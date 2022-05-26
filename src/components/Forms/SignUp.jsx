@@ -52,15 +52,14 @@ export default function SignUp({ resetError, blog_service, onError, serverErr, o
   }, [])
   if (serverErr)
     return (
-      <div style={{ width: '100vw', height: '100vh', position: 'fixed', background: 'rgba(0, 0, 0, 0.1)', top: '0', paddingTop: '120px' }}>
-        <Alert
-          style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
-          message="Error"
-          description={'Recommendations: ' + serverErr.checksRecommendations + '. Mess:' + serverErr.message + '.  Error name: ' + serverErr.name + '.  Error stack: ' + serverErr.stack}
-          type="error"
-          error={serverErr.message}
-        />
-      </div>
+      <Alert
+        style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
+        message="Error"
+        description={'Recommendations: ' + serverErr.checksRecommendations + '. Mess:' + serverErr.message + '.  Error name: ' + serverErr.name + '.  Error stack: ' + serverErr.stack}
+        type="error"
+        error={serverErr.message}
+      />
+      
     )
   if (username) return <Redirect to="/" />
   return (

@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 
 import ArticlesList from '../components/ArticlesList'
-import { finishArticleCreation, updateError, fetchArticles } from '../redux/actions'
+import { finishArticleCreation, updateArticleListError, fetchArticles } from '../redux/actions'
 const mapStateToProps = (state) => {
   return {
     articles: state.articles.articles,
     fetching: state.articles.areFetching,
-    error: state.error,
+    error: state.errors.articleListError,
     newArticle: state.newArticle,
   }
 }
@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onCloseSuccessWin: () => {
       dispatch(finishArticleCreation())
-      dispatch(updateError(null))
+      dispatch(updateArticleListError(null))
     },
     fetchArticles: () => {
       dispatch(fetchArticles())

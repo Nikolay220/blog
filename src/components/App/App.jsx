@@ -3,7 +3,7 @@ import { Redirect, Switch, BrowserRouter as Router, Route } from 'react-router-d
 
 import SignUpContainer from '../../containers/SignUpContainer'
 import SignInContainer from '../../containers/SignInContainer'
-import ProfileContainer from '../../containers/ProfileContainer'
+import Profile from '../Forms/Profile'
 import Header from '../Headers/Header'
 import HeaderWithUsernameContainer from '../../containers/HeaderWithUsernameContainer'
 import HeaderWithSpinner from '../Headers/HeaderWithSpinner'
@@ -38,8 +38,6 @@ export default function App({ username, blogService, onInit, onUserRequest, user
             path="/articles/:id/edit"
             render={({ match }) => {
               const { id } = match.params
-              // console.log(id)
-
               return <NewArticleContainer itemId={id} />
             }}
           />
@@ -56,12 +54,10 @@ export default function App({ username, blogService, onInit, onUserRequest, user
           <PrivateRoute path="/new-article" isAuthenticated={SessionStorageService.getToken()}>
             <NewArticleContainer />
           </PrivateRoute>
-          {/* <Route path="/new-article" component={NewArticle} /> */}
           <Route path="/articles" component={ArticlesListPage} />
           <Route path="/sign-up" component={SignUpContainer} />
           <Route path="/sign-in" component={SignInContainer} />
-          <Route path="/profile" component={ProfileContainer} />
-          {/* <Route path="/create-article" component={Profile} />                    */}
+          <Route path="/profile" component={Profile} />
           <Route path="/" component={ArticlesListPage} />
           <Route path="/new-article" component={ArticlesListPage} />
           <Redirect to="/" />

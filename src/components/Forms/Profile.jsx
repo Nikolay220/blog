@@ -3,18 +3,28 @@ import { Button, Alert } from 'antd'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
 
-// import EditProfileError from '../../Errors/EditProfileError'
+import useProfile from '../../containers/useProfile'
 import AppController from '../../services/AppController'
 import SessionStorageService from '../../services/SessionStorageService'
 
 import classes from './Forms.module.scss'
-export default function Profile({ resetValidationErrors, curProfile, editProfile, hideErrorWin, hideSuccessWin, serverErr, requestState }) {
+const Profile = React.memo(function Profile(){
   const {
     register,
     formState: { errors },
     handleSubmit,
     setError,
   } = useForm()
+
+  const{
+    resetValidationErrors,
+    editProfile,
+    hideErrorWin,
+    hideSuccessWin,
+    serverErr,
+    curProfile,
+    requestState
+  }=useProfile()
 
   useEffect(() => {
     if (curProfile.errors)
@@ -26,7 +36,7 @@ export default function Profile({ resetValidationErrors, curProfile, editProfile
       hideErrorWin()
       resetValidationErrors()
     }
-  }, [curProfile.errors])
+  }, [curProfile.errors,hideErrorWin, hideSuccessWin, resetValidationErrors,setError])
 
   const f = useMemo(() => {
     let contr = new AppController(classes)
@@ -47,7 +57,7 @@ export default function Profile({ resetValidationErrors, curProfile, editProfile
           description={serverErr.message}
           type="error"
           closable
-          onClose={hideErrorWin}
+          onClose={()=>hideErrorWin()}
         />
       )}
       {requestState && (
@@ -57,7 +67,7 @@ export default function Profile({ resetValidationErrors, curProfile, editProfile
           type="success"
           showIcon
           closable
-          onClose={hideSuccessWin}
+          onClose={()=>hideSuccessWin()}
         />
       )}
       <div
@@ -165,4 +175,6 @@ export default function Profile({ resetValidationErrors, curProfile, editProfile
       </div>
     </React.Fragment>
   )
-}
+})
+
+export default Profile

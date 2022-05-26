@@ -8,6 +8,8 @@ const mapStateToProps = (state) => {
     curPage: state.curPage,
     totalArticles: state.articles.totalArticles,
     error: state.error,
+    articleItemError: state.errors.articleItemError,
+    articleListError: state.errors.articleListError,
   }
 }
 const mapDispatchToProps = (dispatch) => {

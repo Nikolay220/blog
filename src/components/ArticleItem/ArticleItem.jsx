@@ -4,15 +4,14 @@ import { Link, Redirect } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { Button, Alert } from 'antd'
 import { ExclamationCircleFilled } from '@ant-design/icons'
+import { v4 as uuidv4 } from 'uuid'
 
 import AppController from '../../services/AppController'
 import CustomSpinner from '../CustomSpinner'
 
 import classes from './ArticleItem.module.scss'
-let id = 1
-export default function ArticleItem({ makeFavorite, makeUnfavorite, resetError, error, article, itemId, history, fetchArticle, curArticle, profileUsername, deleteArticle }) {
+export default function ArticleItem({ resetErrors, makeFavoriteShortArticle, makeFavoriteFullArticle, makeUnfavoriteShortArticle, makeUnfavoriteFullArticle, authError, articleItemError, article, itemId, history, fetchArticle, curArticle, profileUsername, deleteArticle }) {
   let localArticle = itemId ? (curArticle.article ? curArticle.article : article) : article
-
   let {
     slug,
     title,
@@ -37,13 +36,13 @@ export default function ArticleItem({ makeFavorite, makeUnfavorite, resetError, 
       if (element)
         if (index)
           tagsArr.push(
-            <span key={++id} className={f('tag')}>
+            <span key={uuidv4()} className={f('tag')}>
               {element}
             </span>
           )
         else
           tagsArr.push(
-            <span key={++id} className={f('tag tag--choosed')}>
+            <span key={uuidv4()} className={f('tag tag--choosed')}>
               {element}
             </span>
           )
@@ -57,9 +56,9 @@ export default function ArticleItem({ makeFavorite, makeUnfavorite, resetError, 
   useEffect(() => {
     if (itemId) fetchArticle(itemId)
     return () => {
-      resetError()
+      resetErrors()
     }
-  }, [itemId, fetchArticle, resetError])
+  }, [itemId, fetchArticle, resetErrors])
 
   let shortItem = (
     <div className={f('article-item')}>
@@ -73,8 +72,8 @@ export default function ArticleItem({ makeFavorite, makeUnfavorite, resetError, 
                 </Link>
                 <span
                   onClick={() => {
-                    if (!favorited && slug) makeFavorite(slug)
-                    else if (favorited && slug) makeUnfavorite(slug)
+                    if (!favorited && slug) makeFavoriteShortArticle(slug)
+                    else if (favorited && slug) makeUnfavoriteShortArticle(slug)
                   }}
                   className={f('article-likes')}
                 >
@@ -110,8 +109,8 @@ export default function ArticleItem({ makeFavorite, makeUnfavorite, resetError, 
                 <span className={f('article-title')}>{title}</span>
                 <span
                   onClick={() => {
-                    if (!favorited && slug) makeFavorite(slug)
-                    else if (favorited && slug) makeUnfavorite(slug)
+                    if (!favorited && slug) makeFavoriteFullArticle(slug)
+                    else if (favorited && slug) makeUnfavoriteFullArticle(slug)
                   }}
                   className={f('article-likes')}
                 >
@@ -175,25 +174,33 @@ export default function ArticleItem({ makeFavorite, makeUnfavorite, resetError, 
     </div>
   )
   if (curArticle.isFetching) return <CustomSpinner />
-  if (!error && isRemoving) return <CustomSpinner />
-  if (error)
+  if (!articleItemError && isRemoving) return <CustomSpinner />
+  if (articleItemError)
     return (
-      <div style={{ width: '100vw', height: '100vh', position: 'fixed', background: 'rgba(0, 0, 0, 0.1)', top: '0', paddingTop: '120px' }}>
-        <Alert
-          style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
-          message="Error"
-          description={'Recommendations: ' + error.checksRecommendations + '. Mess:' + error.message + '.  Error name: ' + error.name + '.  Error stack: ' + error.stack}
-          type="error"
-          error={error.message}
-          // onClose={onCloseErrorWin}
-          // closable
-        />
-      </div>
+      
+      <Alert
+        style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
+        message="Error"
+        description={'Recommendations: ' + articleItemError.checksRecommendations + '. Mess:' + articleItemError.message + '.  Error name: ' + articleItemError.name + '.  Error stack: ' + articleItemError.stack}
+        type="error"
+        error={articleItemError.message}
+      />
+      
     )
   if (isRemoved) return <Redirect to="/" />
 
   return (
     <React.Fragment>
+      {authError&&(
+        <Alert
+          style={{ position: 'fixed', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', zIndex: '5' }}
+          message={authError.checksRecommendations}
+          type="warning"
+          showIcon
+          closable
+          onClose={()=>resetErrors()}
+        />
+      )}
       {itemId && fullItem}
       {!itemId && shortItem}
     </React.Fragment>

@@ -162,6 +162,21 @@ export function updateError(error) {
   return { type: ERROR_OCCURED, error }
 }
 
+export const ARTICLE_ITEM_ERROR_OCCURED = 'ARTICLE_ITEM_ERROR_OCCURED'
+export function updateArticleItemError(error) {
+  return { type: ARTICLE_ITEM_ERROR_OCCURED, error }
+}
+
+export const ARTICLE_LIST_ERROR_OCCURED = 'ARTICLE_LIST_ERROR_OCCURED'
+export function updateArticleListError(error) {
+  return { type: ARTICLE_LIST_ERROR_OCCURED, error }
+}
+
+export const AUTH_ERROR_OCCURED = 'AUTH_ERROR_OCCURED'
+export function updateAuthError(error) {
+  return { type: AUTH_ERROR_OCCURED, error }
+}
+
 export const UPDATE_USERNAME = 'UPDATE_USERNAME'
 export function updateUsername(username) {
   return { type: UPDATE_USERNAME, username }
@@ -186,27 +201,6 @@ export function receiveUser() {
   }
 }
 
-export const REQUEST_ADD_LIKE = 'REQUEST_ADD_LIKE'
-function requestAddLike() {
-  return {
-    type: REQUEST_ADD_LIKE,
-  }
-}
-
-// export const ADD_LIKE = 'ADD_LIKE'
-// function addLike() {
-//   return {
-//     type: ADD_LIKE
-//   }
-// }
-
-export const RECEIVE_ADD_LIKE = 'RECEIVE_ADD_LIKE'
-function receiveAddLike() {
-  return {
-    type: RECEIVE_ADD_LIKE,
-  }
-}
-
 const apiService = new BlogApiService()
 
 async function getArticles(dispatch) {
@@ -215,10 +209,18 @@ async function getArticles(dispatch) {
   try {
     articles = await apiService.getArticles()
   } catch (error) {
-    dispatch(updateError(error))
+    dispatch(updateArticleListError(error))
   }
   dispatch(updateTotalArticles(articles.articlesCount))
   dispatch(receiveArticles(articles.articles))
+}
+
+export const UPDATE_ARTICLE_ITEM = 'UPDATE_ARTICLE_ITEM'
+function updateArticleItem(updatedArticle) {
+  return {
+    type: UPDATE_ARTICLE_ITEM,
+    updatedArticle,
+  }
 }
 
 async function getArticle(dispatch, slug) {
@@ -227,7 +229,7 @@ async function getArticle(dispatch, slug) {
   try {
     article = await apiService.getArticle(slug)
   } catch (error) {
-    dispatch(updateError(error))
+    dispatch(updateArticleItemError(error))
   }
   dispatch(receiveArticle(article.article))
 }
@@ -250,13 +252,13 @@ export function deleteArticle(slug) {
     apiService.deleteArticle(slug).then(
       (content) => {
         if (content.errors) {
-          dispatch(updateError(new DeleteArticleError(content.errors.message)))
+          dispatch(updateArticleItemError(new DeleteArticleError(content.errors.message)))
         } else {
           dispatch(receiveArticleDelete())
         }
       },
       (error) => {
-        dispatch(updateError(new DeleteArticleError(error.message)))
+        dispatch(updateArticleItemError(new DeleteArticleError(error.message)))
       }
     )
   }
@@ -309,13 +311,9 @@ export function editProfile(username, email, token, password = null, avatarUrl =
         if (content.errors)
           if (content.errors.message) {
             dispatch(updateError(new EditProfileError(content.errors.message)))
-
             return
           } else {
             dispatch(updateValidationErrors(content.errors))
-            // for (const [key, value] of Object.entries(content.errors)) {
-            //   setError(key, { type: 'serverError', message: value })
-            // }
             return
           }
         SessionStorageService.setToken(content.user.token)
@@ -329,37 +327,74 @@ export function editProfile(username, email, token, password = null, avatarUrl =
   }
 }
 
-export function makeFavorite(slug) {
+export function makeFavoriteShortArticle(slug) {
   return (dispatch) => {
-    dispatch(requestAddLike())
     apiService.makeFavorite(slug).then(
       (content) => {
         if (content.errors) {
-          dispatch(updateError(new MakeFavoriteError(content.errors.message)))
+          dispatch(updateAuthError(new MakeFavoriteError(content.errors.message)))
         } else {
-          dispatch(receiveAddLike())
+          dispatch(updateArticleItem(content.article))
         }
       },
       (error) => {
-        dispatch(updateError(new MakeFavoriteError(error.message)))
+        dispatch(updateAuthError(new MakeFavoriteError(error.message)))
       }
     )
   }
 }
 
-export function makeUnfavorite(slug) {
+export function makeUnfavoriteShortArticle(slug) {
   return (dispatch) => {
-    dispatch(requestAddLike())
     apiService.makeUnfavorite(slug).then(
       (content) => {
         if (content.errors) {
-          dispatch(updateError(new MakeFavoriteError(content.errors.message)))
+          dispatch(updateAuthError(new MakeFavoriteError(content.errors.message)))
         } else {
-          dispatch(receiveAddLike())
+          dispatch(updateArticleItem(content.article))
         }
       },
       (error) => {
-        dispatch(updateError(new MakeFavoriteError(error.message)))
+        dispatch(updateAuthError(new MakeFavoriteError(error.message)))
+      }
+    )
+  }
+}
+export function makeFavoriteFullArticle(slug) {
+  return (dispatch) => {
+    dispatch(requestArticleUpdate())
+    apiService.makeFavorite(slug).then(
+      (content) => {
+        if (content.errors) {
+          dispatch(updateArticleItemError(new MakeFavoriteError(content.errors.message)))
+          dispatch(articleUpdateIsFailed())
+        } else {
+          dispatch(receiveArticleUpdate(content.article))
+        }
+      },
+      (error) => {
+        dispatch(updateArticleItemError(new MakeFavoriteError(error.message)))
+        dispatch(articleUpdateIsFailed())
+      }
+    )
+  }
+}
+
+export function makeUnfavoriteFullArticle(slug) {
+  return (dispatch) => {
+    dispatch(requestArticleUpdate())
+    apiService.makeUnfavorite(slug).then(
+      (content) => {
+        if (content.errors) {
+          dispatch(updateArticleItemError(new MakeFavoriteError(content.errors.message)))
+          dispatch(articleUpdateIsFailed())
+        } else {
+          dispatch(receiveArticleUpdate(content.article))
+        }
+      },
+      (error) => {
+        dispatch(updateArticleItemError(new MakeFavoriteError(error.message)))
+        dispatch(articleUpdateIsFailed())
       }
     )
   }

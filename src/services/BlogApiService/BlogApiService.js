@@ -14,7 +14,7 @@ class BlogApiService {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${this.token}`,
+        Authorization: `Token ${SessionStorageService.getToken()}`,
       },
       body: JSON.stringify({ article }),
     })
@@ -27,7 +27,7 @@ class BlogApiService {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${this.token}`,
+        Authorization: `Token ${SessionStorageService.getToken()}`,
       },
       body: JSON.stringify({ article }),
     })
@@ -35,22 +35,14 @@ class BlogApiService {
     return content
   }
   async deleteArticle(slug) {
-    // try {
     const response = await fetch(`${this._base_url}/articles?${slug}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${this.token}`,
+        Authorization: `Token ${SessionStorageService.getToken()}`,
       },
     })
-    // if (response.ok) {
     return await response.json()
-    // } else {
-    //   throw new GetArticlesError(response.ok)
-    // }
-    // } catch (error) {
-    //   throw new GetArticlesError(error.message)
-    // }
   }
   async getArticles() {
     try {
@@ -134,7 +126,7 @@ class BlogApiService {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${this.token}`,
+        Authorization: `Token ${SessionStorageService.getToken()}`,
       },
     })
     const content = await response.json()
@@ -147,11 +139,10 @@ class BlogApiService {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${this.token}`,
+        Authorization: `Token ${SessionStorageService.getToken()}`,
       },
     })
     const content = await response.json()
-
     return content
   }
 }

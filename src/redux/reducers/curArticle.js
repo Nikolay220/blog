@@ -8,7 +8,7 @@ import {
   REQUEST_ARTICLE,
   ARTICLE_UPDATE_IS_FAILED,
 } from '../actions'
-export default function curArticle(state = { isFetching: false, isUpdating: false, isRemoving: false, isUpdated: false, isRemoved: false }, action) {
+export default function curArticle(state = { isFetching: false, isUpdating: false, isRemoving: false, isUpdated: false, isRemoved: false, error: null }, action) {
   switch (action.type) {
     case REQUEST_ARTICLE_DELETE:
       return { ...state, ...{ isRemoving: true } }
@@ -17,7 +17,7 @@ export default function curArticle(state = { isFetching: false, isUpdating: fals
     case REQUEST_ARTICLE_UPDATE:
       return { ...state, ...{ isUpdating: true } }
     case RECEIVE_ARTICLE_UPDATE:
-      return { ...state, ...{ isUpdating: false }, ...{ isUpdated: true }, ...action.curArticle }
+      return { ...state, ...{ isUpdating: false }, ...{ isUpdated: true }, ...{ article: action.curArticle } }
     case FINISH_ARTICLE_UPDATE:
       return { ...state, ...{ isUpdated: false } }
     case ARTICLE_UPDATE_IS_FAILED:

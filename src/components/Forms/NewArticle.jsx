@@ -1,6 +1,5 @@
 import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react'
 import { Alert, Button } from 'antd'
-// import { Redirect } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import { v4 as uuidv4 } from 'uuid'
@@ -74,15 +73,13 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
 
   if (serverErr)
     return (
-      <div style={{ width: '100vw', height: '100vh', position: 'fixed', background: 'rgba(0, 0, 0, 0.1)', top: '0', paddingTop: '120px' }}>
-        <Alert
-          style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
-          message="Error"
-          description={'Recommendations: ' + serverErr.checksRecommendations + '. Mess:' + serverErr.message + '.  Error name: ' + serverErr.name + '.  Error stack: ' + serverErr.stack}
-          type="error"
-          error={serverErr.message}
-        />
-      </div>
+      <Alert
+        style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
+        message="Error"
+        description={'Recommendations: ' + serverErr.checksRecommendations + '. Mess:' + serverErr.message + '.  Error name: ' + serverErr.name + '.  Error stack: ' + serverErr.stack}
+        type="error"
+        error={serverErr.message}
+      />
     )
   let updateTagsFields
   if (!itemId)
@@ -126,13 +123,9 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
       </React.Fragment>
     )
 
-  // }
-  // if (curArticle.isFetching) return <CustomSpinner />
+ 
   if (newArticle.isCreating || curArticle.isUpdating) return <CustomSpinner />
-  // if (newArticle.isCreated) return <Redirect to="/" />
-
-  // if (curArticle.isUpdated) return <Redirect to={`/articles/${itemId}/`} />
-
+ 
   return (
     <React.Fragment>
       {requestState && newArticle.isCreated && (

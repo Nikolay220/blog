@@ -5,9 +5,7 @@ import { createArticle, updateArticle, fetchArticle, updateError, updateReqState
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    // article: ownProps.article,
     itemId: ownProps.itemId,
-    // profileUsername: state.curProfile.username,
     newArticle: state.newArticle,
     serverErr: state.error,
     curArticle: state.curArticle,
@@ -26,12 +24,6 @@ const mapDispatchToProps = (dispatch) => {
     updateArticle: (article, slug) => {
       return dispatch(updateArticle(article, slug))
     },
-    // onSuccess: () => {
-    //   dispatch(updateReqState(true))
-    // },
-    // hideSuccessWin: () => {
-    //   dispatch(updateReqState(false))
-    // },
     resetError: () => {
       dispatch(updateError(null))
     },

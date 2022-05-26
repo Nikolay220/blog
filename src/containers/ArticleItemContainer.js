@@ -1,7 +1,16 @@
 import { connect } from 'react-redux'
 
 import ArticleItem from '../components/ArticleItem'
-import { fetchArticle, deleteArticle, updateError, makeFavorite, makeUnfavorite } from '../redux/actions'
+import {
+  fetchArticle,
+  deleteArticle,
+  updateAuthError,
+  updateArticleItemError,
+  makeFavoriteShortArticle,
+  makeUnfavoriteShortArticle,
+  makeFavoriteFullArticle,
+  makeUnfavoriteFullArticle,
+} from '../redux/actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -9,7 +18,8 @@ const mapStateToProps = (state, ownProps) => {
     itemId: ownProps.itemId,
     curArticle: state.curArticle,
     profileUsername: state.curProfile.username,
-    error: state.error,
+    articleItemError: state.errors.articleItemError,
+    authError: state.errors.authError,
     requestState: state.requestState,
   }
 }
@@ -22,18 +32,22 @@ const mapDispatchToProps = (dispatch) => {
     deleteArticle: (slug) => {
       return dispatch(deleteArticle(slug))
     },
-    resetError: () => {
-      dispatch(updateError(null))
+    resetErrors: () => {
+      dispatch(updateArticleItemError(null))
+      dispatch(updateAuthError(null))
     },
-    makeFavorite: (slug) => {
-      dispatch(makeFavorite(slug))
+    makeFavoriteShortArticle: (slug) => {
+      dispatch(makeFavoriteShortArticle(slug))
     },
-    makeUnfavorite: (slug) => {
-      dispatch(makeUnfavorite(slug))
+    makeUnfavoriteShortArticle: (slug) => {
+      dispatch(makeUnfavoriteShortArticle(slug))
     },
-    // hideSuccessWin: ()=>{
-    //   dispatch(updateReqState(false))
-    // }
+    makeFavoriteFullArticle: (slug) => {
+      dispatch(makeFavoriteFullArticle(slug))
+    },
+    makeUnfavoriteFullArticle: (slug) => {
+      dispatch(makeUnfavoriteFullArticle(slug))
+    },
   }
 }
 
