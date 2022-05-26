@@ -3,49 +3,40 @@ import { Button, Alert } from 'antd'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
 
-import EditProfileError from '../../Errors/EditProfileError'
+// import EditProfileError from '../../Errors/EditProfileError'
 import AppController from '../../services/AppController'
 import SessionStorageService from '../../services/SessionStorageService'
 
 import classes from './Forms.module.scss'
-export default function Profile({ blog_service, onError, onCloseErrorWin, onCloseSuccessWin, onSuccess, onUsernameUpdate, serverErr, requestState }) {
-  useEffect(() => {
-    return () => {
-      onCloseSuccessWin()
-      onCloseErrorWin()
-    }
-  }, [onCloseSuccessWin, onCloseErrorWin])
-  const f = useMemo(() => {
-    let contr = new AppController(classes)
-    return contr.classesToCssModulesFormat.bind(contr)
-  }, [])
+export default function Profile({ resetValidationErrors, curProfile, editProfile, hideErrorWin, hideSuccessWin, serverErr, requestState }) {
   const {
     register,
     formState: { errors },
     handleSubmit,
     setError,
   } = useForm()
-  const onSubmit = (data) => {
-    blog_service.editProfile(data.username, data.email, SessionStorageService.getToken(), data.password, data.avatar).then(
-      (content) => {
-        if (content.errors)
-          if (content.errors.message) {
-            onError(new EditProfileError(content.errors.message))
-            return
-          } else {
-            for (const [key, value] of Object.entries(content.errors)) {
-              setError(key, { type: 'serverError', message: value })
-            }
-            return
-          }
-        SessionStorageService.setToken(content.user.token)
-        onSuccess()
-        onUsernameUpdate(content.user.username)
-      },
-      (error) => {
-        onError(new EditProfileError(error.message))
+
+  useEffect(() => {
+    if(curProfile.errors)
+      for (const [key, value] of Object.entries(curProfile.errors)) {
+        setError(key, { type: 'serverError', message: value })
       }
-    )
+    return () => {
+      hideSuccessWin()
+      hideErrorWin()
+      resetValidationErrors()
+    }
+  
+  }, [curProfile.errors])
+  
+  const f = useMemo(() => {
+    let contr = new AppController(classes)
+    return contr.classesToCssModulesFormat.bind(contr)
+  }, [])
+  
+  const onSubmit = (data) => {
+    resetValidationErrors()
+    editProfile(data.username, data.email, SessionStorageService.getToken(), data.password, data.avatar)
   }
 
   return (
@@ -57,7 +48,7 @@ export default function Profile({ blog_service, onError, onCloseErrorWin, onClos
           description={serverErr.message}
           type="error"
           closable
-          onClose={onCloseErrorWin}
+          onClose={hideErrorWin}
         />
       )}
       {requestState && (
@@ -67,7 +58,7 @@ export default function Profile({ blog_service, onError, onCloseErrorWin, onClos
           type="success"
           showIcon
           closable
-          onClose={onCloseSuccessWin}
+          onClose={hideSuccessWin}
         />
       )}
       <div
@@ -104,6 +95,7 @@ export default function Profile({ blog_service, onError, onCloseErrorWin, onClos
               {...register('email', {
                 required: 'This input is required.',
                 pattern: {
+                  
                   // eslint-disable-next-line no-useless-escape
                   value: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
                   message: 'Email must be correct',

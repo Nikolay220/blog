@@ -1,11 +1,9 @@
 import { connect } from 'react-redux'
 
 import NewArticle from '../components/Forms/NewArticle'
-import { createArticle, updateArticle, fetchArticle, updateError } from '../redux/actions'
+import { createArticle, updateArticle, fetchArticle, updateError, updateReqState, finishArticleUpdate } from '../redux/actions'
 
 const mapStateToProps = (state, ownProps) => {
-  // eslint-disable-next-line no-debugger
-  debugger
   return {
     // article: ownProps.article,
     itemId: ownProps.itemId,
@@ -13,6 +11,7 @@ const mapStateToProps = (state, ownProps) => {
     newArticle: state.newArticle,
     serverErr: state.error,
     curArticle: state.curArticle,
+    requestState: state.requestState,
   }
 }
 
@@ -27,9 +26,18 @@ const mapDispatchToProps = (dispatch) => {
     updateArticle: (article, slug) => {
       return dispatch(updateArticle(article, slug))
     },
-    onCloseSuccessWin: () => {},
+    // onSuccess: () => {
+    //   dispatch(updateReqState(true))
+    // },
+    // hideSuccessWin: () => {
+    //   dispatch(updateReqState(false))
+    // },
     resetError: () => {
       dispatch(updateError(null))
+    },
+    hideSuccessWin: () => {
+      dispatch(updateReqState(false))
+      dispatch(finishArticleUpdate())
     },
   }
 }

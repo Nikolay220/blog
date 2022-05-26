@@ -8,6 +8,7 @@ import curProfile from './curProfile'
 import blog_service from './blog_service'
 import requestState from './requestState'
 import newArticle from './newArticle'
+import like from './like'
 const app = combineReducers({
   curPage,
   articles,
@@ -17,5 +18,6 @@ const app = combineReducers({
   blog_service,
   requestState,
   newArticle,
+  like,
 })
 export default app

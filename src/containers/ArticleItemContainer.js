@@ -1,17 +1,16 @@
 import { connect } from 'react-redux'
 
 import ArticleItem from '../components/ArticleItem'
-import { fetchArticle, deleteArticle, updateError } from '../redux/actions'
+import { fetchArticle, deleteArticle, updateError, makeFavorite, makeUnfavorite } from '../redux/actions'
 
 const mapStateToProps = (state, ownProps) => {
-  // eslint-disable-next-line no-debugger
-  debugger
   return {
     article: ownProps.article,
     itemId: ownProps.itemId,
     curArticle: state.curArticle,
     profileUsername: state.curProfile.username,
     error: state.error,
+    requestState: state.requestState,
   }
 }
 
@@ -26,6 +25,15 @@ const mapDispatchToProps = (dispatch) => {
     resetError: () => {
       dispatch(updateError(null))
     },
+    makeFavorite: (slug) => {
+      dispatch(makeFavorite(slug))
+    },
+    makeUnfavorite: (slug) => {
+      dispatch(makeUnfavorite(slug))
+    },
+    // hideSuccessWin: ()=>{
+    //   dispatch(updateReqState(false))
+    // }
   }
 }
 

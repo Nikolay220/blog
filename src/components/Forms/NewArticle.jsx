@@ -1,24 +1,31 @@
 import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react'
 import { Alert, Button } from 'antd'
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import { v4 as uuidv4 } from 'uuid'
 
 import AppController from '../../services/AppController'
 import CustomSpinner from '../CustomSpinner'
+import SessionStorageService from '../../services/SessionStorageService'
 
 import classes from './Forms.module.scss'
 
-export default function NewArticle({ resetError, updateArticle, itemId, newArticle, serverErr, createArticle, curArticle }) {
+export default function NewArticle({hideSuccessWin, requestState, resetError, updateArticle, itemId, newArticle, serverErr, createArticle, curArticle }) {
   const [tagsList, updateTagsList] = useState(itemId ? (curArticle.article ? curArticle.article.tagList : []) : [])
-  const [title, setTitle] = useState(itemId ? (curArticle.article ? curArticle.article.title : '') : '')
-  const [description, setDescription] = useState(itemId ? (curArticle.article ? curArticle.article.description : '') : '')
-  const [body, setBody] = useState(itemId ? (curArticle.article ? curArticle.article.body : '') : '')
+  const [title, setTitle] = useState(itemId ? (curArticle.article ? curArticle.article.title : SessionStorageService.getTitle() ? SessionStorageService.getTitle():'') : '')
+  const [description, setDescription] = useState(itemId ? (curArticle.article ? curArticle.article.description : SessionStorageService.getDescription() ? SessionStorageService.getDescription():'') : '')
+  const [body, setBody] = useState(itemId ? (curArticle.article ? curArticle.article.body : SessionStorageService.getBody() ? SessionStorageService.getBody():'') : '')
+  SessionStorageService.setTitle(title)
+  SessionStorageService.setDescription(description)
+  SessionStorageService.setBody(body)
   const addTagInput = useRef(null)
   useEffect(() => {
-    return () => resetError()
-  }, [resetError])
+    return () => {
+      hideSuccessWin()
+      resetError()
+    }
+  }, [hideSuccessWin, resetError])
   const f = useMemo(() => {
     let contr = new AppController(classes)
     return contr.classesToCssModulesFormat.bind(contr)
@@ -58,8 +65,9 @@ export default function NewArticle({ resetError, updateArticle, itemId, newArtic
   if (curArticle.isFetching) return <CustomSpinner />
 
   const onSubmit = (data) => {
-    // eslint-disable-next-line no-debugger
-    debugger
+    
+    
+    SessionStorageService.removeArticle()
     if (itemId) updateArticle({ title: data.title, description: data.description, body: data.body }, itemId)
     else createArticle({ title: data.title, description: data.description, body: data.body, tagList: tagsList })
   }
@@ -121,80 +129,111 @@ export default function NewArticle({ resetError, updateArticle, itemId, newArtic
   // }
   // if (curArticle.isFetching) return <CustomSpinner />
   if (newArticle.isCreating || curArticle.isUpdating) return <CustomSpinner />
-  if (newArticle.isCreated) return <Redirect to="/" />
-  // eslint-disable-next-line no-debugger
-  debugger
-  if (curArticle.isUpdated) return <Redirect to={`/articles/${itemId}/`} />
+  // if (newArticle.isCreated) return <Redirect to="/" />
+  
+  
+  // if (curArticle.isUpdated) return <Redirect to={`/articles/${itemId}/`} />
 
   return (
-    <div className={f('form form__newArticle')}>
-      <div className={f('form-header')}>{itemId ? 'Edit article' : 'Create new article'}</div>
-      <form onSubmit={handleSubmit(onSubmit)} className={f('form__form')}>
-        <label className={f('form__label')} htmlFor="title">
-          <div>Title</div>
-          <input
-            {...register('title', {
-              required: 'This input is required.',
-            })}
-            placeholder="Title"
-            className={f(
-              'form__input input__newArticle ' +
+    <React.Fragment>
+      {requestState && newArticle.isCreated && (
+        <Alert
+          style={{ position: 'fixed', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', zIndex: '5' }}
+          message="Article is created"
+          type="success"
+          showIcon
+          closable
+          onClose={hideSuccessWin}
+        />
+      )}
+      {requestState && curArticle.isUpdated && (
+        <Alert
+          style={{ position: 'fixed', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', zIndex: '5' }}
+          message="Article is updated"
+          type="success"
+          showIcon
+          closable
+          onClose={hideSuccessWin}
+        />
+      )}
+      <div className={f('form form__newArticle')}>
+        <div className={f('form-header')}>{itemId ? 'Edit article' : 'Create new article'}</div>
+        <form onSubmit={handleSubmit(onSubmit)} className={f('form__form')}>
+          <label className={f('form__label')} htmlFor="title">
+            <div>Title</div>
+            <input
+              {...register('title', {
+                required: 'This input is required.',
+              })}
+              placeholder="Title"
+              className={f(
+                'form__input input__newArticle ' +
                 classNames({
                   'input__newArticle--invalid': Boolean(errors.title),
                 })
-            )}
-            id="title"
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </label>
-        {errors.title && <p className={f('error-mess')}>{errors.title.message}</p>}
-        <label className={f('form__label')} htmlFor="description">
-          <div>Short description</div>
-          <input
-            {...register('description', {
-              required: 'This input is required.',
-            })}
-            placeholder="Title"
-            className={f(
-              'form__input input__newArticle ' +
+              )}
+              id="title"
+              type="text"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value)
+                SessionStorageService.setTitle(e.target.value)
+              }}
+            />
+          </label>
+          {errors.title && <p className={f('error-mess')}>{errors.title.message}</p>}
+          <label className={f('form__label')} htmlFor="description">
+            <div>Short description</div>
+            <input
+              {...register('description', {
+                required: 'This input is required.',
+              })}
+              placeholder="Title"
+              className={f(
+                'form__input input__newArticle ' +
                 classNames({
                   'input__newArticle--invalid': Boolean(errors.description),
                 })
-            )}
-            id="description"
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </label>
-        {errors.description && <p className={f('error-mess')}>{errors.description.message}</p>}
-        <label className={f('form__label')} htmlFor="body">
-          <div>Text</div>
-          <textarea
-            {...register('body', {
-              required: 'This input is required.',
-            })}
-            placeholder="Text"
-            className={f(
-              'form__input form__textarea input__newArticle ' +
+              )}
+              id="description"
+              type="text"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value)
+                SessionStorageService.setDescription(e.target.value)
+              }}
+            />
+          </label>
+          {errors.description && <p className={f('error-mess')}>{errors.description.message}</p>}
+          <label className={f('form__label')} htmlFor="body">
+            <div>Text</div>
+            <textarea
+              {...register('body', {
+                required: 'This input is required.',
+              })}
+              placeholder="Text"
+              className={f(
+                'form__input form__textarea input__newArticle ' +
                 classNames({
                   'input__newArticle--invalid': Boolean(errors.body),
                 })
-            )}
-            id="body"
-            type="text"
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-          />
-        </label>
-        {errors.body && <p className={f('error-mess')}>{errors.body.message}</p>}
-        {!itemId && updateTagsFields}
-        <Button className={f('form__btn btn__send')} type="primary" block>
-          <input type="submit" value="Send"></input>
-        </Button>
-      </form>
-    </div>
+              )}
+              id="body"
+              type="text"
+              value={body}
+              onChange={(e) => {
+                setBody(e.target.value)
+                SessionStorageService.setBody(e.target.value)
+              }}
+            />
+          </label>
+          {errors.body && <p className={f('error-mess')}>{errors.body.message}</p>}
+          {!itemId && updateTagsFields}
+          <Button className={f('form__btn btn__send')} type="primary" block>
+            <input type="submit" value="Send"></input>
+          </Button>
+        </form>
+      </div>
+    </React.Fragment>
   )
 }

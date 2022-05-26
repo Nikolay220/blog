@@ -39,10 +39,9 @@ export default function App({ username, blogService, onInit, onUserRequest, user
             render={({ match }) => {
               const { id } = match.params
               // console.log(id)
-              // eslint-disable-next-line no-debugger
-              debugger
+              
+              
 
-              // if(!curArticle.article) fetchArticle(id)
 
               return <NewArticleContainer itemId={id} />
             }}

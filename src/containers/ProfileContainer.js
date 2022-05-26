@@ -1,20 +1,25 @@
 import { connect } from 'react-redux'
 
-import { updateError, updateUsername, updateReqState } from '../redux/actions'
+import { editProfile, updateError, updateUsername, updateReqState, updateValidationErrors } from '../redux/actions'
 import Profile from '../components/Forms/Profile'
 const mapStateToProps = (state) => {
   return {
     blog_service: state.blog_service,
     serverErr: state.error,
-    username: state.curProfile.username,
+    curProfile: state.curProfile,
     requestState: state.requestState,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addValidationErrors: (errors) => dispatch(updateValidationErrors(errors)),
+    resetValidationErrors: () => dispatch(updateValidationErrors(null)),
+    editProfile: (username, email, token, password, avatarUrl) => {
+      dispatch(editProfile(username, email, token, password, avatarUrl))
+    },
     onError: (error) => dispatch(updateError(error)),
-    onCloseErrorWin: () => {
+    hideErrorWin: () => {
       dispatch(updateError(null))
     },
     onUsernameUpdate: (username) => {
@@ -23,7 +28,7 @@ const mapDispatchToProps = (dispatch) => {
     onSuccess: () => {
       dispatch(updateReqState(true))
     },
-    onCloseSuccessWin: () => {
+    hideSuccessWin: () => {
       dispatch(updateReqState(false))
     },
   }

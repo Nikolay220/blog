@@ -17,9 +17,9 @@ export default function curArticle(state = { isFetching: false, isUpdating: fals
     case REQUEST_ARTICLE_UPDATE:
       return { ...state, ...{ isUpdating: true } }
     case RECEIVE_ARTICLE_UPDATE:
-      return { ...state, ...{ isUpdating: false }, ...{ isUpdated: true } }
+      return { ...state, ...{ isUpdating: false }, ...{ isUpdated: true }, ...action.curArticle }
     case FINISH_ARTICLE_UPDATE:
-      return { ...state, ...{ isUpdated: false }, ...action.curArticle }
+      return { ...state, ...{ isUpdated: false } }
     case ARTICLE_UPDATE_IS_FAILED:
       return { ...state, ...{ isUpdating: false }, ...{ isUpdated: false } }
     case REQUEST_ARTICLE:

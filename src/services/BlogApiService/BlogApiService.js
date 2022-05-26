@@ -35,8 +35,6 @@ class BlogApiService {
     return content
   }
   async deleteArticle(slug) {
-    // eslint-disable-next-line no-debugger
-    debugger
     // try {
     const response = await fetch(`${this._base_url}/articles?${slug}`, {
       method: 'DELETE',
@@ -129,6 +127,32 @@ class BlogApiService {
       },
     })
     return await response.json()
+  }
+
+  async makeFavorite(slug) {
+    const response = await fetch(`${this._base_url}/articles/${slug}/favorite`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${this.token}`,
+      },
+    })
+    const content = await response.json()
+
+    return content
+  }
+
+  async makeUnfavorite(slug) {
+    const response = await fetch(`${this._base_url}/articles/${slug}/favorite`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${this.token}`,
+      },
+    })
+    const content = await response.json()
+
+    return content
   }
 }
 export default BlogApiService
