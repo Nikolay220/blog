@@ -17,7 +17,7 @@ export default function Profile({ resetValidationErrors, curProfile, editProfile
   } = useForm()
 
   useEffect(() => {
-    if(curProfile.errors)
+    if (curProfile.errors)
       for (const [key, value] of Object.entries(curProfile.errors)) {
         setError(key, { type: 'serverError', message: value })
       }
@@ -26,14 +26,13 @@ export default function Profile({ resetValidationErrors, curProfile, editProfile
       hideErrorWin()
       resetValidationErrors()
     }
-  
   }, [curProfile.errors])
-  
+
   const f = useMemo(() => {
     let contr = new AppController(classes)
     return contr.classesToCssModulesFormat.bind(contr)
   }, [])
-  
+
   const onSubmit = (data) => {
     resetValidationErrors()
     editProfile(data.username, data.email, SessionStorageService.getToken(), data.password, data.avatar)
@@ -95,7 +94,6 @@ export default function Profile({ resetValidationErrors, curProfile, editProfile
               {...register('email', {
                 required: 'This input is required.',
                 pattern: {
-                  
                   // eslint-disable-next-line no-useless-escape
                   value: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
                   message: 'Email must be correct',

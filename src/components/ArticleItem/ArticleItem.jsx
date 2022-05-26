@@ -5,7 +5,6 @@ import ReactMarkdown from 'react-markdown'
 import { Button, Alert } from 'antd'
 import { ExclamationCircleFilled } from '@ant-design/icons'
 
-
 import AppController from '../../services/AppController'
 import CustomSpinner from '../CustomSpinner'
 
@@ -13,8 +12,7 @@ import classes from './ArticleItem.module.scss'
 let id = 1
 export default function ArticleItem({ makeFavorite, makeUnfavorite, resetError, error, article, itemId, history, fetchArticle, curArticle, profileUsername, deleteArticle }) {
   let localArticle = itemId ? (curArticle.article ? curArticle.article : article) : article
-  
-  
+
   let {
     slug,
     title,
@@ -24,7 +22,7 @@ export default function ArticleItem({ makeFavorite, makeUnfavorite, resetError, 
     description,
     createdAt,
     author: { username, image },
-    body,    
+    body,
     isRemoved,
     isRemoving,
   } = localArticle
@@ -73,12 +71,14 @@ export default function ArticleItem({ makeFavorite, makeUnfavorite, resetError, 
                 <Link to={`/articles/${slug}/`} className={f('article-title')}>
                   {title}
                 </Link>
-                <span onClick={()=>{
-                  if(!favorited&&slug) 
-                    makeFavorite(slug) 
-                  else if(favorited&&slug) 
-                    makeUnfavorite(slug)}} className={f('article-likes')}>
-                  <img src={favorited?'/images/red-heart.png':'/images/heart.png'} alt="" style={{ marginBottom: '5px' }} />
+                <span
+                  onClick={() => {
+                    if (!favorited && slug) makeFavorite(slug)
+                    else if (favorited && slug) makeUnfavorite(slug)
+                  }}
+                  className={f('article-likes')}
+                >
+                  <img src={favorited ? '/images/red-heart.png' : '/images/heart.png'} alt="" style={{ marginBottom: '5px' }} />
                 </span>
                 <span className={f('favorites-count')}>{favoritesCount}</span>
               </div>
@@ -108,12 +108,14 @@ export default function ArticleItem({ makeFavorite, makeUnfavorite, resetError, 
             <div className={f('article-item__leftCol')}>
               <div className={f('aligned-row')}>
                 <span className={f('article-title')}>{title}</span>
-                <span onClick={()=>{
-                  if(!favorited&&slug) 
-                    makeFavorite(slug) 
-                  else if(favorited&&slug) 
-                    makeUnfavorite(slug)}} className={f('article-likes')}>
-                  <img src={favorited?'/images/red-heart.png':'/images/heart.png'} alt="" style={{ marginBottom: '5px' }} />
+                <span
+                  onClick={() => {
+                    if (!favorited && slug) makeFavorite(slug)
+                    else if (favorited && slug) makeUnfavorite(slug)
+                  }}
+                  className={f('article-likes')}
+                >
+                  <img src={favorited ? '/images/red-heart.png' : '/images/heart.png'} alt="" style={{ marginBottom: '5px' }} />
                 </span>
                 <span className={f('favorites-count')}>{favoritesCount}</span>
               </div>

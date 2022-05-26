@@ -5,7 +5,7 @@ import CustomSpinner from '../CustomSpinner'
 import ArticleItemContainer from '../../containers/ArticleItemContainer'
 const articlesPerPage = 5
 let id = 1
-export default function ArticlesList({fetchArticles, articles, fetching, error, onCloseSuccessWin }) {
+export default function ArticlesList({ fetchArticles, articles, fetching, error, onCloseSuccessWin }) {
   let generateArticlesList = useCallback((articles) => {
     let articlesItems = []
     for (let i = 0; i < articlesPerPage; i++) articlesItems.push(<ArticleItemContainer key={++id} article={articles[i]} />)
@@ -30,9 +30,5 @@ export default function ArticlesList({fetchArticles, articles, fetching, error, 
       </div>
     )
   if (fetching) return <CustomSpinner />
-  return (
-    <div>      
-      {generateArticlesList(articles)}
-    </div>
-  )
+  return <div>{generateArticlesList(articles)}</div>
 }

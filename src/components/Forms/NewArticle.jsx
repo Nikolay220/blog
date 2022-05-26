@@ -11,11 +11,13 @@ import SessionStorageService from '../../services/SessionStorageService'
 
 import classes from './Forms.module.scss'
 
-export default function NewArticle({hideSuccessWin, requestState, resetError, updateArticle, itemId, newArticle, serverErr, createArticle, curArticle }) {
+export default function NewArticle({ hideSuccessWin, requestState, resetError, updateArticle, itemId, newArticle, serverErr, createArticle, curArticle }) {
   const [tagsList, updateTagsList] = useState(itemId ? (curArticle.article ? curArticle.article.tagList : []) : [])
-  const [title, setTitle] = useState(itemId ? (curArticle.article ? curArticle.article.title : SessionStorageService.getTitle() ? SessionStorageService.getTitle():'') : '')
-  const [description, setDescription] = useState(itemId ? (curArticle.article ? curArticle.article.description : SessionStorageService.getDescription() ? SessionStorageService.getDescription():'') : '')
-  const [body, setBody] = useState(itemId ? (curArticle.article ? curArticle.article.body : SessionStorageService.getBody() ? SessionStorageService.getBody():'') : '')
+  const [title, setTitle] = useState(itemId ? (curArticle.article ? curArticle.article.title : SessionStorageService.getTitle() ? SessionStorageService.getTitle() : '') : '')
+  const [description, setDescription] = useState(
+    itemId ? (curArticle.article ? curArticle.article.description : SessionStorageService.getDescription() ? SessionStorageService.getDescription() : '') : ''
+  )
+  const [body, setBody] = useState(itemId ? (curArticle.article ? curArticle.article.body : SessionStorageService.getBody() ? SessionStorageService.getBody() : '') : '')
   SessionStorageService.setTitle(title)
   SessionStorageService.setDescription(description)
   SessionStorageService.setBody(body)
@@ -65,8 +67,6 @@ export default function NewArticle({hideSuccessWin, requestState, resetError, up
   if (curArticle.isFetching) return <CustomSpinner />
 
   const onSubmit = (data) => {
-    
-    
     SessionStorageService.removeArticle()
     if (itemId) updateArticle({ title: data.title, description: data.description, body: data.body }, itemId)
     else createArticle({ title: data.title, description: data.description, body: data.body, tagList: tagsList })
@@ -130,8 +130,7 @@ export default function NewArticle({hideSuccessWin, requestState, resetError, up
   // if (curArticle.isFetching) return <CustomSpinner />
   if (newArticle.isCreating || curArticle.isUpdating) return <CustomSpinner />
   // if (newArticle.isCreated) return <Redirect to="/" />
-  
-  
+
   // if (curArticle.isUpdated) return <Redirect to={`/articles/${itemId}/`} />
 
   return (
@@ -168,9 +167,9 @@ export default function NewArticle({hideSuccessWin, requestState, resetError, up
               placeholder="Title"
               className={f(
                 'form__input input__newArticle ' +
-                classNames({
-                  'input__newArticle--invalid': Boolean(errors.title),
-                })
+                  classNames({
+                    'input__newArticle--invalid': Boolean(errors.title),
+                  })
               )}
               id="title"
               type="text"
@@ -191,9 +190,9 @@ export default function NewArticle({hideSuccessWin, requestState, resetError, up
               placeholder="Title"
               className={f(
                 'form__input input__newArticle ' +
-                classNames({
-                  'input__newArticle--invalid': Boolean(errors.description),
-                })
+                  classNames({
+                    'input__newArticle--invalid': Boolean(errors.description),
+                  })
               )}
               id="description"
               type="text"
@@ -214,9 +213,9 @@ export default function NewArticle({hideSuccessWin, requestState, resetError, up
               placeholder="Text"
               className={f(
                 'form__input form__textarea input__newArticle ' +
-                classNames({
-                  'input__newArticle--invalid': Boolean(errors.body),
-                })
+                  classNames({
+                    'input__newArticle--invalid': Boolean(errors.body),
+                  })
               )}
               id="body"
               type="text"

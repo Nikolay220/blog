@@ -39,9 +39,6 @@ export default function App({ username, blogService, onInit, onUserRequest, user
             render={({ match }) => {
               const { id } = match.params
               // console.log(id)
-              
-              
-
 
               return <NewArticleContainer itemId={id} />
             }}
