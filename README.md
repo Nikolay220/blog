@@ -1,2 +1,2 @@
- [Ссылка на приложение.](https://blog-nine-zeta.vercel.app).
+ [Ссылка на приложение](https://blog-nine-zeta.vercel.app).
 
