@@ -4,7 +4,7 @@ import { Pagination } from 'antd'
 import './Paginator.scss'
 import styles from './Paginator.module.scss'
 
-export default function Paginator({ articleItemError, articleListError,curPage, totalArticles, onCurPageChange, error }) {
+export default function Paginator({ articleItemError, articleListError, curPage, totalArticles, onCurPageChange, error }) {
   if (!error && !articleItemError && !articleListError)
     return (
       <div className={styles['paginator-container']}>

@@ -8,7 +8,7 @@ import AppController from '../../services/AppController'
 import SessionStorageService from '../../services/SessionStorageService'
 
 import classes from './Forms.module.scss'
-const Profile = React.memo(function Profile(){
+const Profile = React.memo(function Profile() {
   const {
     register,
     formState: { errors },
@@ -16,15 +16,7 @@ const Profile = React.memo(function Profile(){
     setError,
   } = useForm()
 
-  const{
-    resetValidationErrors,
-    editProfile,
-    hideErrorWin,
-    hideSuccessWin,
-    serverErr,
-    curProfile,
-    requestState
-  }=useProfile()
+  const { resetValidationErrors, editProfile, hideErrorWin, hideSuccessWin, serverErr, curProfile, requestState } = useProfile()
 
   useEffect(() => {
     if (curProfile.errors)
@@ -36,7 +28,7 @@ const Profile = React.memo(function Profile(){
       hideErrorWin()
       resetValidationErrors()
     }
-  }, [curProfile.errors,hideErrorWin, hideSuccessWin, resetValidationErrors,setError])
+  }, [curProfile.errors, hideErrorWin, hideSuccessWin, resetValidationErrors, setError])
 
   const f = useMemo(() => {
     let contr = new AppController(classes)
@@ -57,7 +49,7 @@ const Profile = React.memo(function Profile(){
           description={serverErr.message}
           type="error"
           closable
-          onClose={()=>hideErrorWin()}
+          onClose={() => hideErrorWin()}
         />
       )}
       {requestState && (
@@ -67,7 +59,7 @@ const Profile = React.memo(function Profile(){
           type="success"
           showIcon
           closable
-          onClose={()=>hideSuccessWin()}
+          onClose={() => hideSuccessWin()}
         />
       )}
       <div

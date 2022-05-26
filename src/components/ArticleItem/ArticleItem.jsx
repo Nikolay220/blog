@@ -10,7 +10,22 @@ import AppController from '../../services/AppController'
 import CustomSpinner from '../CustomSpinner'
 
 import classes from './ArticleItem.module.scss'
-export default function ArticleItem({ resetErrors, makeFavoriteShortArticle, makeFavoriteFullArticle, makeUnfavoriteShortArticle, makeUnfavoriteFullArticle, authError, articleItemError, article, itemId, history, fetchArticle, curArticle, profileUsername, deleteArticle }) {
+export default function ArticleItem({
+  resetErrors,
+  makeFavoriteShortArticle,
+  makeFavoriteFullArticle,
+  makeUnfavoriteShortArticle,
+  makeUnfavoriteFullArticle,
+  authError,
+  articleItemError,
+  article,
+  itemId,
+  history,
+  fetchArticle,
+  curArticle,
+  profileUsername,
+  deleteArticle,
+}) {
   let localArticle = itemId ? (curArticle.article ? curArticle.article : article) : article
   let {
     slug,
@@ -177,28 +192,28 @@ export default function ArticleItem({ resetErrors, makeFavoriteShortArticle, mak
   if (!articleItemError && isRemoving) return <CustomSpinner />
   if (articleItemError)
     return (
-      
       <Alert
         style={{ maxWidth: '504px', margin: 'auto', marginTop: '10px' }}
         message="Error"
-        description={'Recommendations: ' + articleItemError.checksRecommendations + '. Mess:' + articleItemError.message + '.  Error name: ' + articleItemError.name + '.  Error stack: ' + articleItemError.stack}
+        description={
+          'Recommendations: ' + articleItemError.checksRecommendations + '. Mess:' + articleItemError.message + '.  Error name: ' + articleItemError.name + '.  Error stack: ' + articleItemError.stack
+        }
         type="error"
         error={articleItemError.message}
       />
-      
     )
   if (isRemoved) return <Redirect to="/" />
 
   return (
     <React.Fragment>
-      {authError&&(
+      {authError && (
         <Alert
           style={{ position: 'fixed', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', zIndex: '5' }}
           message={authError.checksRecommendations}
           type="warning"
           showIcon
           closable
-          onClose={()=>resetErrors()}
+          onClose={() => resetErrors()}
         />
       )}
       {itemId && fullItem}

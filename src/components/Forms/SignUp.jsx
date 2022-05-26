@@ -59,7 +59,6 @@ export default function SignUp({ resetError, blog_service, onError, serverErr, o
         type="error"
         error={serverErr.message}
       />
-      
     )
   if (username) return <Redirect to="/" />
   return (

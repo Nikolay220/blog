@@ -26,7 +26,7 @@ export default function ArticlesList({ fetchArticles, articles, fetching, error,
         description={'Recommendations: ' + error.checksRecommendations + '. Mess:' + error.message + '.  Error name: ' + error.name + '.  Error stack: ' + error.stack}
         type="error"
         error={error.message}
-      />      
+      />
     )
   if (fetching) return <CustomSpinner />
   return <div>{generateArticlesList(articles)}</div>

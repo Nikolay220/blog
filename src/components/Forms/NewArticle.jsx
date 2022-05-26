@@ -123,9 +123,8 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
       </React.Fragment>
     )
 
- 
   if (newArticle.isCreating || curArticle.isUpdating) return <CustomSpinner />
- 
+
   return (
     <React.Fragment>
       {requestState && newArticle.isCreated && (
