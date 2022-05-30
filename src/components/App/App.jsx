@@ -8,8 +8,9 @@ import Header from '../Headers/Header'
 import HeaderWithUsernameContainer from '../../containers/HeaderWithUsernameContainer'
 import HeaderWithSpinner from '../Headers/HeaderWithSpinner'
 import 'antd/dist/antd.min.css'
-import ArticleItemContainer from '../../containers/ArticleItemContainer'
 import ArticlesListPage from '../ArticlesListPage'
+import EditArticlePage from '../EditArticlePage'
+import FullArticlePage from '../FullArticlePage'
 import SessionStorageService from '../../services/SessionStorageService'
 import NewArticleContainer from '../../containers/NewArticleContainer'
 import PrivateRoute from '../PrivateRoute'
@@ -34,32 +35,20 @@ export default function App({ username, blogService, onInit, onUserRequest, user
       <Router>
         {!userIsFetching ? username ? <HeaderWithUsernameContainer /> : <Header /> : <HeaderWithSpinner />}
         <Switch>
-          <Route
-            path="/articles/:id/edit"
-            render={({ match }) => {
-              const { id } = match.params
-              return <NewArticleContainer itemId={id} />
-            }}
-          />
-          <Route
-            path="/articles/:id/"
-            render={({ match, location, history }) => {
-              if (!location.pathname.endsWith('/')) {
-                history.push(location.pathname.trim() + '/')
-              }
-              const { id } = match.params
-              return <ArticleItemContainer history={history} itemId={id} />
-            }}
-          />
+          <PrivateRoute path="/articles/:id/edit" isAuthenticated={SessionStorageService.getToken()}>
+            <EditArticlePage />
+          </PrivateRoute>
+          <Route path="/articles/:id/" component={FullArticlePage}/>
           <PrivateRoute path="/new-article" isAuthenticated={SessionStorageService.getToken()}>
             <NewArticleContainer />
           </PrivateRoute>
           <Route path="/articles" component={ArticlesListPage} />
           <Route path="/sign-up" component={SignUpContainer} />
           <Route path="/sign-in" component={SignInContainer} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/" component={ArticlesListPage} />
-          <Route path="/new-article" component={ArticlesListPage} />
+          <PrivateRoute path="/profile" isAuthenticated={SessionStorageService.getToken()}>
+            <Profile/>
+          </PrivateRoute>
+          <Route path="/" component={ArticlesListPage} />          
           <Redirect to="/" />
         </Switch>
       </Router>
