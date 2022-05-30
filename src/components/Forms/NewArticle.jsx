@@ -12,21 +12,22 @@ import classes from './Forms.module.scss'
 
 export default function NewArticle({ hideSuccessWin, requestState, resetError, updateArticle, itemId, newArticle, serverErr, createArticle, curArticle }) {
   const [tagsList, updateTagsList] = useState(itemId ? (curArticle.article ? curArticle.article.tagList : []) : [])
-  const [title, setTitle] = useState(itemId ? (curArticle.article ? curArticle.article.title : SessionStorageService.getTitle() ? SessionStorageService.getTitle() : '') : '')
+  const [title, setTitle] = useState(itemId ? (curArticle.article ? curArticle.article.title : SessionStorageService.getTitle(itemId) ? SessionStorageService.getTitle(itemId) : '') : '')
   const [description, setDescription] = useState(
-    itemId ? (curArticle.article ? curArticle.article.description : SessionStorageService.getDescription() ? SessionStorageService.getDescription() : '') : ''
+    itemId ? (curArticle.article ? curArticle.article.description : SessionStorageService.getDescription(itemId) ? SessionStorageService.getDescription(itemId) : '') : ''
   )
-  const [body, setBody] = useState(itemId ? (curArticle.article ? curArticle.article.body : SessionStorageService.getBody() ? SessionStorageService.getBody() : '') : '')
-  SessionStorageService.setTitle(title)
-  SessionStorageService.setDescription(description)
-  SessionStorageService.setBody(body)
+  const [body, setBody] = useState(itemId ? (curArticle.article ? curArticle.article.body : SessionStorageService.getBody(itemId) ? SessionStorageService.getBody(itemId) : '') : '')
+  SessionStorageService.setTitle(title, itemId)
+  SessionStorageService.setDescription(description, itemId)
+  SessionStorageService.setBody(body, itemId)
   const addTagInput = useRef(null)
   useEffect(() => {
+    SessionStorageService.removePrevEditedArticle(itemId)
     return () => {
       hideSuccessWin()
       resetError()
     }
-  }, [hideSuccessWin, resetError])
+  }, [hideSuccessWin, resetError, itemId])
   const f = useMemo(() => {
     let contr = new AppController(classes)
     return contr.classesToCssModulesFormat.bind(contr)
@@ -66,7 +67,7 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
   if (curArticle.isFetching) return <CustomSpinner />
 
   const onSubmit = (data) => {
-    SessionStorageService.removeArticle()
+    SessionStorageService.removeArticle(itemId)
     if (itemId) updateArticle({ title: data.title, description: data.description, body: data.body }, itemId)
     else createArticle({ title: data.title, description: data.description, body: data.body, tagList: tagsList })
   }
@@ -168,7 +169,7 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value)
-                SessionStorageService.setTitle(e.target.value)
+                SessionStorageService.setTitle(e.target.value, itemId)
               }}
             />
           </label>
@@ -191,7 +192,7 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
               value={description}
               onChange={(e) => {
                 setDescription(e.target.value)
-                SessionStorageService.setDescription(e.target.value)
+                SessionStorageService.setDescription(e.target.value, itemId)
               }}
             />
           </label>
@@ -214,7 +215,7 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
               value={body}
               onChange={(e) => {
                 setBody(e.target.value)
-                SessionStorageService.setBody(e.target.value)
+                SessionStorageService.setBody(e.target.value, itemId)
               }}
             />
           </label>
