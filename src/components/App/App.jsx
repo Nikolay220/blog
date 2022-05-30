@@ -38,7 +38,7 @@ export default function App({ username, blogService, onInit, onUserRequest, user
           <PrivateRoute path="/articles/:id/edit" isAuthenticated={SessionStorageService.getToken()}>
             <EditArticlePage />
           </PrivateRoute>
-          <Route path="/articles/:id/" component={FullArticlePage}/>
+          <Route path="/articles/:id/" component={FullArticlePage} />
           <PrivateRoute path="/new-article" isAuthenticated={SessionStorageService.getToken()}>
             <NewArticleContainer />
           </PrivateRoute>
@@ -46,9 +46,9 @@ export default function App({ username, blogService, onInit, onUserRequest, user
           <Route path="/sign-up" component={SignUpContainer} />
           <Route path="/sign-in" component={SignInContainer} />
           <PrivateRoute path="/profile" isAuthenticated={SessionStorageService.getToken()}>
-            <Profile/>
+            <Profile />
           </PrivateRoute>
-          <Route path="/" component={ArticlesListPage} />          
+          <Route path="/" component={ArticlesListPage} />
           <Redirect to="/" />
         </Switch>
       </Router>
