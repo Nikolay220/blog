@@ -3,6 +3,7 @@ import { Alert, Button } from 'antd'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import { v4 as uuidv4 } from 'uuid'
+import { Redirect } from 'react-router-dom'
 
 import AppController from '../../services/AppController'
 import CustomSpinner from '../CustomSpinner'
@@ -24,7 +25,8 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
   useEffect(() => {
     SessionStorageService.removePrevEditedArticle(itemId)
     return () => {
-      hideSuccessWin()
+      
+      hideSuccessWin()        
       resetError()
     }
   }, [hideSuccessWin, resetError, itemId])
@@ -65,7 +67,7 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
     handleSubmit,
   } = useForm()
   if (curArticle.isFetching) return <CustomSpinner />
-
+  
   const onSubmit = (data) => {
     SessionStorageService.removeArticle(itemId)
     if (itemId) updateArticle({ title: data.title, description: data.description, body: data.body }, itemId)
@@ -129,14 +131,17 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
   return (
     <React.Fragment>
       {requestState && newArticle.isCreated && (
-        <Alert
-          style={{ position: 'fixed', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', zIndex: '5' }}
-          message="Article is created"
-          type="success"
-          showIcon
-          closable
-          onClose={hideSuccessWin}
-        />
+        <React.Fragment>
+          <Alert
+            style={{ position: 'fixed', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', zIndex: '5' }}
+            message="Article is created"
+            type="success"
+            showIcon
+            closable
+            onClose={hideSuccessWin}
+          />
+          <Redirect to="/" />
+        </React.Fragment>
       )}
       {requestState && curArticle.isUpdated && (
         <Alert
