@@ -25,9 +25,8 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
   useEffect(() => {
     SessionStorageService.removePrevEditedArticle(itemId)
     return () => {
-      
-      hideSuccessWin()        
-      resetError()
+      hideSuccessWin()
+      resetError()      
     }
   }, [hideSuccessWin, resetError, itemId])
   const f = useMemo(() => {
@@ -140,7 +139,10 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
             closable
             onClose={hideSuccessWin}
           />
-          <Redirect to="/" />
+          <Redirect to={{
+            pathname:'/',
+            state: {referrer:''}
+          }} />
         </React.Fragment>
       )}
       {requestState && curArticle.isUpdated && (
