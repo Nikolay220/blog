@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import classes from './Header.module.scss'
 
-export default function HeaderWithUsername({ signOut, username }) {
+export default function HeaderWithUsername({ signOut, username, image }) {
   return (
     <div className={classes['header']}>
       <Link to="/">
@@ -14,9 +14,9 @@ export default function HeaderWithUsername({ signOut, username }) {
         <Button type="primary" ghost className={`${classes['btn']} ${classes['btn__create-article']}`}>
           <Link to="/new-article">Create article</Link>
         </Button>
-        <Link to="/profile">
+        <Link style={{ display:'flex', alignItems:'center' }} to="/profile">
           <span className={classes['header__username']}>{username}</span>
-          <img src="/images/author_image.png" alt="" />
+          <div className={classes['author-image']} style={{ backgroundImage: `url(${image})` }}></div>
         </Link>
         <Button
           onClick={() => {

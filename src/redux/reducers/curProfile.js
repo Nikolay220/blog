@@ -1,12 +1,12 @@
-import { RESET_VALIDATION_ERRORS, UPDATE_VALIDATION_ERRORS, SIGN_OUT, SIGN_IN, UPDATE_USERNAME, REQUEST_USER, RECEIVE_USER } from '../actions'
+import { RESET_VALIDATION_ERRORS, UPDATE_VALIDATION_ERRORS, SIGN_OUT, SIGN_IN, UPDATE_USER_DATA, REQUEST_USER, RECEIVE_USER } from '../actions'
 
 export default function curProfile(state = { username: null, isFetching: false, errors: null }, action) {
   switch (action.type) {
-    case UPDATE_USERNAME:
+    case UPDATE_USER_DATA:
     case SIGN_IN:
-      return { ...state, ...{ username: action.username } }
+      return { ...state, ...{ username: action.username, image: action.image } }
     case SIGN_OUT:
-      return { ...state, ...{ username: null } }
+      return { ...state, ...{ username: null, image: null } }
     case REQUEST_USER:
       return { ...state, ...{ isFetching: true } }
     case RECEIVE_USER:

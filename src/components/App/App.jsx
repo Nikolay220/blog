@@ -25,7 +25,7 @@ export default function App({ username, blogService, onInit, onUserRequest, user
       blogService
         .getCurUser(savedToken)
         .then((response) => {
-          if (response.user) onInit(response.user.username)
+          if (response.user) onInit(response.user.username,response.user.image)
         })
         .catch(() => {})
     }

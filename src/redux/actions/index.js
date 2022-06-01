@@ -179,9 +179,9 @@ export function updateAuthError(error) {
   return { type: AUTH_ERROR_OCCURED, error }
 }
 
-export const UPDATE_USERNAME = 'UPDATE_USERNAME'
-export function updateUsername(username) {
-  return { type: UPDATE_USERNAME, username }
+export const UPDATE_USER_DATA = 'UPDATE_USER_DATA'
+export function updateUserData(username, image) {
+  return { type: UPDATE_USER_DATA, username, image }
 }
 
 export const UPDATE_REQ_STATE = 'UPDATE_REQ_STATE'
@@ -320,7 +320,7 @@ export function editProfile(username, email, token, password = null, avatarUrl =
           }
         SessionStorageService.setToken(content.user.token)
         dispatch(updateReqState(true))
-        dispatch(updateUsername(username))
+        dispatch(updateUserData(content.user.username, content.user.image))
       },
       (error) => {
         dispatch(updateError(new EditProfileError(error.message)))

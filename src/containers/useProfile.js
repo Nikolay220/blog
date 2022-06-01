@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { editProfile, updateError, updateUsername, updateReqState, updateValidationErrors } from '../redux/actions'
+import { editProfile, updateError, updateUserData, updateReqState, updateValidationErrors } from '../redux/actions'
 export default function useProfile() {
   const dispatch = useDispatch()
   return {
@@ -10,7 +10,7 @@ export default function useProfile() {
     editProfile: useCallback((username, email, token, password, avatarUrl) => dispatch(editProfile(username, email, token, password, avatarUrl)), [dispatch]),
     onError: useCallback((error) => dispatch(updateError(error)), [dispatch]),
     hideErrorWin: useCallback(() => dispatch(updateError(null)), [dispatch]),
-    onUsernameUpdate: useCallback((username) => dispatch(updateUsername(username)), [dispatch]),
+    onUsernameUpdate: useCallback((username, image) => dispatch(updateUserData(username, image)), [dispatch]),
     onSuccess: useCallback(() => dispatch(updateReqState(true)), [dispatch]),
     hideSuccessWin: useCallback(() => dispatch(updateReqState(false)), [dispatch]),
     blog_service: useSelector((state) => state.blog_service),

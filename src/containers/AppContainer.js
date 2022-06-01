@@ -21,9 +21,9 @@ const mapDispatchToProps = (dispatch) => {
     onUserRequest: () => {
       dispatch(requestUser())
     },
-    onInit: (username) => {
+    onInit: (username, user) => {
       dispatch(receiveUser())
-      dispatch(signIn(username))
+      dispatch(signIn(username, user))
     },
     hideSuccessWin: () => {
       dispatch(updateReqState(false))
