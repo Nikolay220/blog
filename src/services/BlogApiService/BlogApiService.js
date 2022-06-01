@@ -95,15 +95,15 @@ class BlogApiService {
 
     return content
   }
-  async editProfile(username, email, token, password = null, avatarUrl = null) {
+  async editProfile(username, email, token, password = null, image = null) {
     let obj = { username, email }
     if (password) obj.password = password
-    if (avatarUrl) obj.avatarUrl = avatarUrl
+    if (image) obj.image = image
     const response = await fetch(`${this._base_url}/user`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
+        Authorization: `Token ${SessionStorageService.getToken() ? SessionStorageService.getToken() : ''}`,
       },
       body: JSON.stringify({ user: obj }),
     })
