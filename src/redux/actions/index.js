@@ -205,11 +205,11 @@ export function receiveUser() {
 
 const apiService = new BlogApiService()
 
-async function getArticles(dispatch) {
+async function getArticles(dispatch, curPage) {
   dispatch(requestArticles())
   let articles
   try {
-    articles = await apiService.getArticles()
+    articles = await apiService.getArticles(curPage)
   } catch (error) {
     dispatch(updateArticleListError(new GetArticlesError(error.message)))
   }
@@ -236,9 +236,9 @@ async function getArticle(dispatch, slug) {
   dispatch(receiveArticle(article.article))
 }
 
-export function fetchArticles() {
+export function fetchArticles(curPage) {
   return (dispatch) => {
-    getArticles(dispatch)
+    getArticles(dispatch, curPage)
   }
 }
 

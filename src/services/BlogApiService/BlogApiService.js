@@ -41,8 +41,8 @@ class BlogApiService {
     })
     return await response.json()
   }
-  async getArticles() {
-    const response = await fetch(`${this._base_url}/articles?limit=5`)
+  async getArticles(curPage) {
+    const response = await fetch(`${this._base_url}/articles?limit=5&offset=${(curPage - 1) * 5}`)
     if (response.ok) {
       return await response.json()
     } else {

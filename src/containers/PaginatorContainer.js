@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onCurPageChange: (new_page) => {
       dispatch(chooseOtherPage(new_page))
-      dispatch(fetchArticles())
+      dispatch(fetchArticles(new_page))
     },
   }
 }

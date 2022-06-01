@@ -8,6 +8,7 @@ const mapStateToProps = (state) => {
     fetching: state.articles.areFetching,
     error: state.errors.articleListError,
     newArticle: state.newArticle,
+    curPage: state.curPage,
   }
 }
 
@@ -17,8 +18,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(finishArticleCreation())
       dispatch(updateArticleListError(null))
     },
-    fetchArticles: () => {
-      dispatch(fetchArticles())
+    fetchArticles: (curPage) => {
+      dispatch(fetchArticles(curPage))
     },
   }
 }
