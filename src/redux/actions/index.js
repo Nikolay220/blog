@@ -5,6 +5,8 @@ import UpdateArticleError from '../../Errors/UpdateArticleError'
 import MakeFavoriteError from '../../Errors/MakeFavoriteError'
 import EditProfileError from '../../Errors/EditProfileError'
 import SessionStorageService from '../../services/SessionStorageService'
+import GetArticlesError from '../../Errors/GetArticlesError'
+import GetArticleError from '../../Errors/GetArticleError'
 
 export const CHANGE_SORT_FILTER = 'CHANGE_SORT_FILTER'
 export const UPDATE_STOPS_CHECKBOXES = 'UPDATE_STOPS_CHECKBOXES'
@@ -209,7 +211,7 @@ async function getArticles(dispatch) {
   try {
     articles = await apiService.getArticles()
   } catch (error) {
-    dispatch(updateArticleListError(error))
+    dispatch(updateArticleListError(new GetArticlesError(error.message)))
   }
   dispatch(updateTotalArticles(articles.articlesCount))
   dispatch(receiveArticles(articles.articles))
@@ -229,7 +231,7 @@ async function getArticle(dispatch, slug) {
   try {
     article = await apiService.getArticle(slug)
   } catch (error) {
-    dispatch(updateArticleItemError(error))
+    dispatch(updateArticleItemError(new GetArticleError(error.message)))
   }
   dispatch(receiveArticle(article.article))
 }

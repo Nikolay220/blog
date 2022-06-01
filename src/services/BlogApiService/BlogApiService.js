@@ -1,7 +1,5 @@
 import fetch from 'cross-fetch'
 
-import GetArticlesError from '../../Errors/GetArticlesError'
-import GetArticleError from '../../Errors/GetArticleError'
 import SessionStorageService from '../SessionStorageService'
 
 class BlogApiService {
@@ -19,7 +17,6 @@ class BlogApiService {
       body: JSON.stringify({ article }),
     })
     const content = await response.json()
-
     return content
   }
   async updateArticle(article, slug) {
@@ -45,28 +42,20 @@ class BlogApiService {
     return await response.json()
   }
   async getArticles() {
-    try {
-      const response = await fetch(`${this._base_url}/articles?limit=5`)
-      if (response.ok) {
-        return await response.json()
-      } else {
-        throw new GetArticlesError(response.ok)
-      }
-    } catch (error) {
-      throw new GetArticlesError(error.message)
+    const response = await fetch(`${this._base_url}/articles?limit=5`)
+    if (response.ok) {
+      return await response.json()
+    } else {
+      throw new Error(response.ok)
     }
   }
 
   async getArticle(slug) {
-    try {
-      const response = await fetch(`${this._base_url}/articles/${slug}`)
-      if (response.ok) {
-        return await response.json()
-      } else {
-        throw new GetArticleError(response.ok)
-      }
-    } catch (error) {
-      throw new GetArticleError(error.message)
+    const response = await fetch(`${this._base_url}/articles/${slug}`)
+    if (response.ok) {
+      return await response.json()
+    } else {
+      throw new Error(response.ok)
     }
   }
 
