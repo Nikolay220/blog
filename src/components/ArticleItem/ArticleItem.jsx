@@ -104,7 +104,7 @@ export default function ArticleItem({
                   <div className={f('author_name')}>{username}</div>
                   <div className={f('article_created')}>{format(date, 'PP')}</div>
                 </div>
-                <div className={f('author-image')} style = {{backgroundImage:`url(${image})`}}></div>
+                <div className={f('author-image')} style={{ backgroundImage: `url(${image})` }}></div>
               </div>
             </div>
           </div>
@@ -140,7 +140,7 @@ export default function ArticleItem({
                 <div className={f('author_name')}>{username}</div>
                 <div className={f('article_created')}>{format(date, 'PP')}</div>
               </div>
-              <div className={f('author-image')} style = {{backgroundImage:`url(${image})`}}></div>
+              <div className={f('author-image')} style={{ backgroundImage: `url(${image})` }}></div>
             </div>
           </div>
           <div className={f('article-item-header__row')}>

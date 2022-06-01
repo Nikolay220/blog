@@ -26,7 +26,7 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
     SessionStorageService.removePrevEditedArticle(itemId)
     return () => {
       hideSuccessWin()
-      resetError()      
+      resetError()
     }
   }, [hideSuccessWin, resetError, itemId])
   const f = useMemo(() => {
@@ -66,7 +66,7 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
     handleSubmit,
   } = useForm()
   if (curArticle.isFetching) return <CustomSpinner />
-  
+
   const onSubmit = (data) => {
     SessionStorageService.removeArticle(itemId)
     if (itemId) updateArticle({ title: data.title, description: data.description, body: data.body }, itemId)
@@ -139,10 +139,12 @@ export default function NewArticle({ hideSuccessWin, requestState, resetError, u
             closable
             onClose={hideSuccessWin}
           />
-          <Redirect to={{
-            pathname:'/',
-            state: {referrer:''}
-          }} />
+          <Redirect
+            to={{
+              pathname: '/',
+              state: { referrer: '' },
+            }}
+          />
         </React.Fragment>
       )}
       {requestState && curArticle.isUpdated && (
