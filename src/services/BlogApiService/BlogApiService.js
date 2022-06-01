@@ -42,7 +42,13 @@ class BlogApiService {
     return await response.json()
   }
   async getArticles(curPage) {
-    const response = await fetch(`${this._base_url}/articles?limit=5&offset=${(curPage - 1) * 5}`)
+    const response = await fetch(`${this._base_url}/articles?limit=5&offset=${(curPage - 1) * 5}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${SessionStorageService.getToken() ? SessionStorageService.getToken() : ''}`,
+      },
+    })
     if (response.ok) {
       return await response.json()
     } else {
@@ -51,7 +57,13 @@ class BlogApiService {
   }
 
   async getArticle(slug) {
-    const response = await fetch(`${this._base_url}/articles/${slug}`)
+    const response = await fetch(`${this._base_url}/articles/${slug}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${SessionStorageService.getToken() ? SessionStorageService.getToken() : ''}`,
+      },
+    })
     if (response.ok) {
       return await response.json()
     } else {
