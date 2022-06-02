@@ -14,7 +14,7 @@ export default function HeaderWithUsername({ signOut, username, image }) {
         <Button type="primary" ghost className={`${classes['btn']} ${classes['btn__create-article']}`}>
           <Link to="/new-article">Create article</Link>
         </Button>
-        <Link style={{ display:'flex', alignItems:'center' }} to="/profile">
+        <Link style={{ display: 'flex', alignItems: 'center' }} to="/profile">
           <span className={classes['header__username']}>{username}</span>
           <div className={classes['author-image']} style={{ backgroundImage: `url(${image})` }}></div>
         </Link>

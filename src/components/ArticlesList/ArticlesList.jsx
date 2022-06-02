@@ -5,11 +5,10 @@ import { v4 as uuidv4 } from 'uuid'
 import CustomSpinner from '../CustomSpinner'
 import ArticleItemContainer from '../../containers/ArticleItemContainer'
 
-const articlesPerPage = 5
 export default function ArticlesList({ fetchArticles, curPage, articles, fetching, error, onCloseSuccessWin }) {
   let generateArticlesList = useCallback((articles) => {
     let articlesItems = []
-    for (let i = 0; i < articlesPerPage; i++) articlesItems.push(<ArticleItemContainer key={uuidv4()} article={articles[i]} />)
+    for (let i = 0; i < articles.length; i++) articlesItems.push(<ArticleItemContainer key={uuidv4()} article={articles[i]} />)
     return articlesItems
   }, [])
 
